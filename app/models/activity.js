@@ -44,6 +44,23 @@ export default Resource.extend({
       return this.doAction('stop');
     }
   },
+  amount: function(){
+    var activity_stages = this.get('activity_stages');
+    var countStage = 0;
+    var countStep = 0;
+    for (var i = 0; i < activity_stages.length; i++) {
+      var stage = activity_stages[i];
+      countStage++;
+      for (var j = 0; j < stage.activity_steps.length; j++) {
+        stage.activity_steps[j];
+        countStep++;
+      }
+    }
+    return {
+      countStage,
+      countStep
+    };
+  }.property('activity_stages'),
   availableActions: function() {
     var a = this.get('actionLinks');
     var status = this.get('status');

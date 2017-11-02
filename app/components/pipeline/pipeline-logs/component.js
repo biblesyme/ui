@@ -156,8 +156,10 @@ export default Ember.Component.extend(ThrottledResize, {
   },
 
   onResize: function() {
-    this.$('.log-body').css('min-height', Math.max(($(window).height() - this.get('logHeight'))) + 'px');
-    this.$('.log-body').css('height', '100%');
+    var amount = this.get('instance.activity.amount')
+    // this.$('.log-body').css('min-height', Math.max(($(window).height() - this.get('logHeight'))) + 'px');
+    debugger
+    this.$('.log-body').css('height', (amount.countStep + amount.countStage)*82+'px');
   },
 
   willDestroyElement: function() {
