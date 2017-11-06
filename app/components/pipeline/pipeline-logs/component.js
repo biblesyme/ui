@@ -56,6 +56,9 @@ export default Ember.Component.extend(ThrottledResize, {
   showLogs: function(){
     var inst = this.get('instance');
     var key = inst.step[0]+'-'+inst.step[1];
+    Ember.run.next(() => {
+      this.send('scrollToBottom');
+    });
     return inst.activityLogs[key];
   }.property('instance.step.@each','showLogsTrigger'),
   showLogsTrigger:'',
@@ -113,11 +116,11 @@ export default Ember.Component.extend(ThrottledResize, {
       Ember.set(logsAry, key, logs);
       this.set('showLogsTrigger', logs);
       // logs&&this.set('showLogs', logs);
-      if (isFollow) {
-        Ember.run.next(() => {
-          this.send('scrollToBottom');
-        });
-      }
+      // if (isFollow) {
+      //   Ember.run.next(() => {
+      //     this.send('scrollToBottom');
+      //   });
+      // }
     };
 
     var instance = this.get('instance');
@@ -158,7 +161,6 @@ export default Ember.Component.extend(ThrottledResize, {
   onResize: function() {
     var amount = this.get('instance.activity.amount')
     // this.$('.log-body').css('min-height', Math.max(($(window).height() - this.get('logHeight'))) + 'px');
-    debugger
     this.$('.log-body').css('height', (amount.countStep + amount.countStage)*82+'px');
   },
 

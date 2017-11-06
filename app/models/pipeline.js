@@ -65,7 +65,6 @@ export default Resource.extend({
       { label: 'action.remove', icon: 'icon icon-trash', action: 'remove', enabled: true },
     ];
   }.property('actions.{run,remove}', 'isActivate'),
-
   validationErrors() {
     var errors = []
     if (!this.get('name')) {

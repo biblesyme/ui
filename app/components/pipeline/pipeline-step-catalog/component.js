@@ -48,7 +48,7 @@ export default Ember.Component.extend({
     if(!selectedTemplate){
       return
     }
-    this.set('selectedModel.externalId',selectedTemplate.defaultTemplateVersionId);
+    this.set('selectedModel.externalId',selectedTemplate.id);
   }.observes('selectedTemplate'),
   selectedVersion: null,
   templatesObserver: function() {
@@ -80,7 +80,7 @@ export default Ember.Component.extend({
         selectedTemplate&&this.set('selectedTemplate',selectedTemplate);
       }
       selectedTemplate = this.get('selectedTemplate');
-      selectedTemplate&&this.set('selectedModel.externalId',selectedTemplate.defaultTemplateVersionId);
+      selectedTemplate&&this.set('selectedModel.externalId',selectedTemplate.id);
       return res;
     });
   }.observes('catalogId'),

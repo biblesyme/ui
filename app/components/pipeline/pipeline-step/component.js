@@ -18,7 +18,11 @@ export default Ember.Component.extend({
   }.property('model.endpoint'),
   catalogSubtitle: function(){
     var env = this.get('model.endpoint');
-    var name = this.get('model.externalId').split(':')[0];
+    var name = this.get('model.externalId');
+    if(!name){
+      return this.get('endpointService.api.display.environment.current')
+    }
+    name = name.split(':')[0];
     if (!env) {
       return name + ' - ' + this.get('endpointService.api.display.environment.current')
     }

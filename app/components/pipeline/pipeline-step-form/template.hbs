@@ -21,6 +21,7 @@
 
 {{#if (eq type 'build')}}
   {{pipeline/step-build
+    pipeline=pipeline
     selectedModel=selectedModel
     modalOpts=modalOpts
   }}
@@ -79,6 +80,7 @@
   <div class="pt-10"></div>
   {{#if selectedModel.expressions}}
     {{pipeline/pipeline-expressions
+      pipeline=pipeline
       model=selectedModel
       editing=(if (not-eq modalOpts.type 'review') true false)
     }}

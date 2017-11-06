@@ -23,6 +23,7 @@
     <tbody>
       {{#each labelArray as |rule index|}}
         {{pipeline/expression-row
+          pipeline=pipeline
           editing=editing
           rule=rule
           remove="removeSchedulingRule"

@@ -81,7 +81,7 @@
   {{#if matchedRegistry}}
     <p class="text-info">This image will be pushed to <code>{{matchedRegistry.serverAddress}}</code></p>
   {{else}}
-    <p class="text-error">The registry <code>{{resolvedRegistry}}</code> haven't been authenticated, click {{#link-to "registries.new" target="_blank"}}here{{/link-to}} to authenticate it.</p>
+    <p class="text-error">The registry <code>{{resolvedRegistry}}</code> haven't been authenticated, click <a href="{{registriesRoute}}" target="_blank">here</a> to authenticate it.</p>
   {{/if}}
   {{/if}}
 {{/if}}

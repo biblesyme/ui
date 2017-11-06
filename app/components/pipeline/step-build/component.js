@@ -6,6 +6,13 @@ export default Ember.Component.extend({
   registries: null,
   matchedRegistry: null,
   pushDisabled: true,
+  registriesRoute: '',
+  init(){
+    this._super();
+    var route = this.router.generate('registries.new');
+    route = route.replace('#','');
+    this.set('registriesRoute',route);
+  },
   resolvedRegistry: function(){
     var images = this.get('selectedModel.targetImage');
     if(!images){

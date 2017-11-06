@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { ajaxPromise } from 'ember-api-store/utils/ajax-promise';
 
 export default Ember.Component.extend({
   repos:[],
@@ -52,7 +51,6 @@ export default Ember.Component.extend({
   selectedGitUserObserve: function(){
     var selectedGitUser = this.get('selectedGitUser');
     this.set('pipelineSvc.selectedGitUser',selectedGitUser);
-    var pipelineStore = this.get('pipelineStore');
     this.set('selectedModel.gitUser', selectedGitUser.login);
     this.set('repoFetching',true);
     selectedGitUser.followLink('repos').then(res=>{
