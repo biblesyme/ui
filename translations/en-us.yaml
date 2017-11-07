@@ -3111,7 +3111,7 @@ newReceiver:
   serviceSelector:
     label: Service Selector
     addActionLabel: Add Selector Label
-    help: Services matching the given label will be upgraded
+    help: Services matching all of the given label will be upgraded
   amount:
     label: By
   min:

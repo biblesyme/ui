@@ -52,6 +52,13 @@
 
 <div class="pt-20"></div>
 <div class="inline-form">
+  <label>Build Path(relative to workspace){{field-required}}</label>
+  <div class="pt-10"></div>
+  {{input class="form-control" value=selectedModel.buildPath placeholder="Dockerfile Path" disabled=(if (eq modalOpts.type 'review') true false)}}
+</div>
+
+<div class="pt-20"></div>
+<div class="inline-form">
   <div class="pt-10"></div>
   <label>
     {{#if detectingPush}}

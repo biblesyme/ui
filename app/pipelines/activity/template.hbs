@@ -25,6 +25,12 @@
   {{pipeline-stages pipeline=model.activity.pipelineSource stagesDraggable=false review=true model=model.activity.pipelineSource.stages}}
 </section>
 
+<div class="mt-10"></div>
+{{pipeline/pipeline-parameters
+  pipeline=model.activity.pipelineSource
+  preview=true
+}}
+
 <div class="mt-40"></div>
 <section class="header has-tabs clearfix">
   <ul class="tab-nav">

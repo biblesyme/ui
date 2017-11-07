@@ -1,4 +1,16 @@
-<div class="inline-form">
+{{#if (eq type 'scm')}}
+  <div class="banner bg-warning">
+    <div class="banner-icon"><span class="icon icon-alert"></span></div>
+    <div class="banner-message">
+      <p>To create your pipeline, please specify the source code repo</p>
+    </div>
+  </div>
+  {{pipeline/step-scm
+    selectedModel=selectedModel
+    modalOpts=modalOpts
+  }}
+{{else}}
+  <div class="inline-form">
   <label>{{t 'newPipelineStep.jobType.label'}}</label>
   <div class="pt-10"></div>
   <div>
@@ -11,12 +23,6 @@
   }}
   </div>
 </div>
-
-{{#if (eq type 'scm')}}
-  {{pipeline/step-scm
-    selectedModel=selectedModel
-    modalOpts=modalOpts
-  }}
 {{/if}}
 
 {{#if (eq type 'build')}}
@@ -65,10 +71,10 @@
 <label>Timeout</label>
 <div class="pt-10"></div>
 <div class="input-group">
-  {{input-number min='3' classNames="form-control" value=selectedModel.timeout}}
+  {{input-number min='3' classNames="form-control" disabled=(if (eq modalOpts.type 'review') true) value=selectedModel.timeout}}
   <span class="input-group-addon bg-default">minutes</span>
 </div>
-<p class="text-info text small mt-0 mb-0">If a step does not complete by the specified amount of time (in minutes; at least 3), then the build will be terminated automatically and marked as Abort.</p>
+<p class="text-info text small mt-0 mb-0">If a step does not complete by the specified amount of time (in minutes; at least 3), then the build will be terminated automatically and marked as Fail.</p>
 {{/if}}
 
 {{#if (not-eq type 'scm')}}

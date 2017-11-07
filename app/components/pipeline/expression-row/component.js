@@ -5,15 +5,24 @@ export default Ember.Component.extend({
   instance: null,
   init(){
     this._super();
+    var pipelineStore = this.get('pipelineStore');
+    var env = this.get('env');
+    pipelineStore.find('envvars', null, {
+      url: `${pipelineStore.baseUrl}/envvars`,
+      forceReload: true
+    }).then((res) => {
+      this.set('envvarsLoading', false);
+      var envars = JSON.parse(res);
+      if(env){
+        envars = envars.concat(Object.keys(env));
+      }
+      this.set('envvars', envars);
+    });
     var rule = this.get('rule');
-    rule||this.set('rule',{
-      env:'',
-      opt:'=',
-      value: ''
-    })
+    rule.opt||this.set('rule.opt','=')
   },
-  expressionsRelation: [{label: 'Any of these', value: 'any', info:'Run when at least one of the conditions are true'}
-  ,{label: 'All of these', value: 'all', info:'Run when all of the conditions are true'}],
+  expressionsRelation: [{label: 'Any of these', value: 'any', info:'Run when at least one of the conditions are met'}
+  ,{label: 'All of these', value: 'all', info:'Run when all of the conditions are met'}],
   selectedInfo: function(){
     var relation = this.get('expressionsRelation').find(ele => ele.value===this.get('conditions.mode'));
     return relation?relation.info:'';
@@ -63,21 +72,4 @@ export default Ember.Component.extend({
       this.sendAction('remove', this.get('rule'));
     }
   },
-
-  init: function() {
-    this._super();
-    var pipelineStore = this.get('pipelineStore');
-    var env = this.get('env');
-    pipelineStore.find('envvars', null, {
-      url: `${pipelineStore.baseUrl}/envvars`,
-      forceReload: true
-    }).then((res) => {
-      this.set('envvarsLoading', false);
-      var envars = JSON.parse(res);
-      if(env){
-        envars = envars.concat(Object.keys(env));
-      }
-      this.set('envvars', envars);
-    });
-  }
 });

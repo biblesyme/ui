@@ -23,7 +23,7 @@ export default Component.extend({
 
     this._codeMirror.on("keyup", (cm, e) => {
       if (arrows.indexOf(e.keyCode) < 0) {
-        this._codeMirror.showHint()
+        this._codeMirror.showHint({completeSingle:false})
       }
     })
     // Send a "valueUpdated" action when CodeMirror triggers a "change" event.

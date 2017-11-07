@@ -49,7 +49,6 @@ export default Ember.Component.extend(ManageLabels, {
   init() {
     this.set('allHosts', this.get('store').all('host'));
     this._super(...arguments);
-
     this.initLabels(this.get('initialLabels'), 'affinity');
     var model = this.get('model');
     var keys = model.conditions ? Object.keys(model.conditions) : [];

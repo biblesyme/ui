@@ -20,7 +20,7 @@
   <div class="inline-form">
     <label>Branch {{field-required}}</label>
     <div class="pt-10"></div>
-    {{input class="form-control" value=selectedModel.branch placeholder="master" disabled=(if (eq modalOpts.type 'review') true false)}}
+    {{input class="form-control js-disable-hint" value=selectedModel.branch placeholder="master" disabled=(if (eq modalOpts.type 'review') true false)}}
   </div>
 {{/if}}
 
@@ -75,34 +75,40 @@
       <div class="inline-form">
         <label>Branch{{field-required}}</label>
         <div class="pt-10"></div>
-        {{input class="form-control" value=selectedModel.branch placeholder="master" disabled=(if (eq modalOpts.type 'review') true false)}}
+        {{input class="form-control js-disable-hint" value=selectedModel.branch placeholder="master" disabled=(if (eq modalOpts.type 'review') true false)}}
       </div>
       <div class="pt-20"></div>
       <div class="inline-form">
         <div class="pt-10"></div>
         <label>
-          {{#if selected.permissions.admin}}
-            {{check-box class="form-control" checked=selectedModel.webhook disabled=(if (eq modalOpts.type 'review') true false) }}
+          {{#if (not-eq modalOpts.type 'review')}}
+            {{#if selected.permissions.admin}}
+              {{check-box class="form-control" checked=selectedModel.webhook disabled=(if (eq modalOpts.type 'review') true false) }}
+            {{else}}
+              <i class="icon icon-close text-warning"></i>
+            {{/if}}
           {{else}}
-            <i class="icon icon-close text-warning"></i>
+              {{check-box class="form-control" checked=selectedModel.webhook disabled=(if (eq modalOpts.type 'review') true false) }}
           {{/if}}
           Webhook
         </label>
         {{#tooltip-element 
           type="tooltip-basic"
-          model="This option is used to enable webhook, which will trigger pipeline when there is a new push."
+          model="Automatic trigger the pipeline when push to the repo."
           tooltipTemplate='tooltip-static'
           aria-describedby="tooltip-base"
           tooltipFor="audit-log"}}
           <i class="icon icon-help text-info"></i>
         {{/tooltip-element}}
-        {{#if (not-eq selected.permissions.admin true)}}
-          <div class="banner bg-warning">
-            <div class="banner-icon"><span class="icon icon-alert"></span></div>
-            <div class="banner-message">
-              <p>no permissions</p>
+        {{#if (not-eq modalOpts.type 'review')}}
+          {{#if (and (not-eq selected.permissions.admin true) selected)}}
+            <div class="banner bg-warning">
+              <div class="banner-icon"><span class="icon icon-alert"></span></div>
+              <div class="banner-message">
+                <p>no permissions</p>
+              </div>
             </div>
-          </div>
+          {{/if}}
         {{/if}}
       </div>
     {{else}}

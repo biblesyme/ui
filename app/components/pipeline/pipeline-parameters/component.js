@@ -11,26 +11,26 @@ var convertObjectToArry = function(obj) {
 };
 
 export default Ember.Component.extend({
-  env:{},
-  init(){
+  env: {},
+  init() {
     this._super();
-    var parameters=this.get('model.pipeline.parameters');
-    var env={};
-    if (parameters&&parameters.length) {
+    var parameters = this.get('pipeline.parameters');
+    var env = {};
+    if (parameters && parameters.length) {
       for (var i = 0; i < parameters.length; i++) {
         var value = parameters[i].split('=');
         var k = value[0];
         var v = value[1];
         env[k] = v;
       }
-      this.set('env',env);
+      this.set('env', env);
     }
   },
-  envObserves: function(){
+  envObserves: function() {
     var env = this.get('env')
-    this.set('model.pipeline.parameters',convertObjectToArry(env))
+    this.set('pipeline.parameters', convertObjectToArry(env))
   }.observes('env.@each'),
-  expandFn:function(item) {
+  expandFn: function(item) {
     item.toggleProperty('expanded');
   },
 });

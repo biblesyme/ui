@@ -73,6 +73,14 @@ export default Ember.Component.extend(NewOrEdit, {
     },
     setState: function(state, val){
       this.set(state,val);
+      // sync two Tab
+      if(state === 'selectTemplateFromOldVersion'){
+        if(val){
+          this.set('previewTab', this.get('previewTabCI'));
+        }else{
+          this.set('previewTabCI', this.get('previewTab'));
+        }
+      }
     },
     cancel: function() {
       this.sendAction('cancel');
@@ -84,9 +92,11 @@ export default Ember.Component.extend(NewOrEdit, {
 
     selectPreviewTab: function(tab) {
       this.set('previewTab', tab);
+      this.set('previewTabCI', tab);
     },
     selectPreviewTabCI: function(tab) {
       this.set('previewTabCI', tab);
+      this.set('previewTab', tab);
     },
     changeTemplate: function(tpl) {
       this.get('application').transitionToRoute('catalog-tab.launch', tpl.id);

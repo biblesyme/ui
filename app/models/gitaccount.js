@@ -5,12 +5,15 @@ import PolledResource from 'ui/mixins/cattle-polled-resource';
 var Account = Resource.extend(PolledResource, {
   type: 'gitaccount',
   modalService: Ember.inject.service('modal'),
+  cb() {
+    return this.doAction('remove');
+  },
+  displayName: function(){
+    return this.get('login');
+  }.property('login'),
   actions:{
-    remove:function(callback,falseCallback){
-      var cb = ()=>{
-        this.doAction('remove').then(callback).catch(falseCallback);
-      }
-      this.get('modalService').toggleModal('confirm-delete', {resources: [{...this, cb}]});
+    remove:function(){
+      this.get('modalService').toggleModal('confirm-delete', {resources: [this]});
     },
   },
   profilePicture: function(){

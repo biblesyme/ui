@@ -9,8 +9,7 @@
     {{/if}}
   </div>
   {{#if editing}}
-    {{#if (eq type 'scm')}}
-    {{else}}
+    {{#if (not-eq type 'scm')}}
     <div class="right-buttons">
       <button class="btn bg-error" {{action 'remove'}}>
         {{t 'generic.remove'}}
@@ -20,11 +19,11 @@
   {{/if}}
 </section>
 {{pipeline/pipeline-step-form
-    pipeline=modalOpts.pipeline
-    model=editingModels
-    type=type
-    editing=editing
-    modalOpts=modalOpts
+  pipeline=modalOpts.pipeline
+  model=editingModels
+  type=type
+  editing=editing
+  modalOpts=modalOpts
 }}
 {{top-errors errors=errors}}
 {{#if (eq modalOpts.type 'review')}}

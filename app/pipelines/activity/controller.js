@@ -53,7 +53,11 @@ export default Ember.Controller.extend({
         return
       }
       this.set('disableRerun', true);
-      this.get('model.activity').doAction('rerun')
+      this.get('model.activity')
+        .doAction('rerun')
+          .finally(()=>{
+            this.set('disableRerun', false);
+          })
     },
     stop: function(){
       var disabled = this.get('disableStop');
@@ -61,7 +65,12 @@ export default Ember.Controller.extend({
         return
       }
       this.set('disableStop', true);
-      this.get('model.activity').doAction('stop')
+      this.get('model.activity')
+        .doAction('stop')
+          .finally(()=>{
+            debugger
+            this.set('disableStop', false);
+          })
     },
     showLogsActivity: function(stageIndex,stepIndex){
       this.set('model.stageIndex',stageIndex);

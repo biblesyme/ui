@@ -55,7 +55,7 @@ export default Ember.Component.extend({
     this.set('repoFetching',true);
     selectedGitUser.followLink('repos').then(res=>{
       this.set('statusFetching',false);
-      var repos = JSON.parse(res)
+      var repos = JSON.parse(res);
       this.set('repos',repos);
       this.syncRepository();
     }).finally(()=>{
@@ -109,7 +109,9 @@ export default Ember.Component.extend({
       this.set('selectedModel.sourceType',type);
     },
     reload: function(){
-      this.loadSetting();
+      this.loadSetting(()=>{
+        this.set('setting',res);
+      });
     }
   }
 });

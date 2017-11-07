@@ -26,7 +26,6 @@ Router.map(function() {
     this.route('shibboleth-auth');
   });
   this.route('logout');
-  this.route('pipeline-oauth', {path:'/pipelineOAuth'});
   this.route('authenticated', {path: '/'}, function() {
 
     this.route('style-guide', {path: '/style-guide'});

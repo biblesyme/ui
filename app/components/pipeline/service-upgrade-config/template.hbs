@@ -1,11 +1,15 @@
 <div class="box mt-20">
     <div class="form-label form-control-static">
-      <label class="acc-label">{{t 'newReceiver.tag.label'}}{{field-required}}</label>
+      <label class="acc-label">Image{{field-required}}</label>
     </div>
     <div>
-      {{input type="text" class="form-control" value=model.imageTag}}
+      {{input-suggest
+        value=model.imageTag
+        choices=pipeline.images
+        placeholder="hello-world:latest"
+        disabled=(if (eq modalOpts.type 'review') true false)
+      }}
     </div>
-    <p class="help-block">{{t 'newReceiver.tag.help'}}</p>
 </div>
 <div class="box mt-20">
     <div class="form-label form-control-static">
@@ -13,10 +17,13 @@
     </div>
     <div>
       {{form-key-value
+        allowMultilineValue=false
         initialMap=model.serviceSelector
         changed=(action (mut model.serviceSelector))
         addActionLabel="newReceiver.serviceSelector.addActionLabel"
-        allowEmptyValue=true
+        allowEmptyValue=false
+        valuePlaceholder="value"
+        editing=(if (eq modalOpts.type 'review') false true)
       }}
       <p class="help-block">{{t 'newReceiver.serviceSelector.help'}}</p>
     </div>

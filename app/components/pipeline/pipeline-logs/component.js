@@ -53,15 +53,15 @@ export default Ember.Component.extend(ThrottledResize, {
       });
     },
   },
-  showLogs: function(){
+  showLogs: function() {
     var inst = this.get('instance');
-    var key = inst.step[0]+'-'+inst.step[1];
+    var key = inst.step[0] + '-' + inst.step[1];
     Ember.run.next(() => {
       this.send('scrollToBottom');
     });
     return inst.activityLogs[key];
-  }.property('instance.step.@each','showLogsTrigger'),
-  showLogsTrigger:'',
+  }.property('instance.step.@each', 'showLogsTrigger'),
+  showLogsTrigger: '',
   observeInstance: function() {
     this.disconnect();
     Ember.run.next(this, 'exec');
@@ -112,7 +112,7 @@ export default Ember.Component.extend(ThrottledResize, {
       });
       var inst = this.get('instance');
       var logsAry = inst.activityLogs;
-      var key = inst.step[0]+'-'+inst.step[1];
+      var key = inst.step[0] + '-' + inst.step[1];
       Ember.set(logsAry, key, logs);
       this.set('showLogsTrigger', logs);
       // logs&&this.set('showLogs', logs);
@@ -131,9 +131,19 @@ export default Ember.Component.extend(ThrottledResize, {
     var socket = new WebSocket(url);
     this.set('socket', socket);
     socket.onopen = () => {
+      //  resolve async destroyed component problem
+      var status = this.get('status');
+      if (status === 'closed') {
+        return
+      }
       this.set('status', 'connected');
     };
     socket.onmessage = (message) => {
+      //  resolve async destroyed component problem   
+      var status = this.get('status');
+      if (status === 'closed') {
+        return
+      }
       this.set('status', 'connected');
       var msg = JSON.parse(message.data);
       if (msg.data) {
@@ -161,7 +171,7 @@ export default Ember.Component.extend(ThrottledResize, {
   onResize: function() {
     var amount = this.get('instance.activity.amount')
     // this.$('.log-body').css('min-height', Math.max(($(window).height() - this.get('logHeight'))) + 'px');
-    this.$('.log-body').css('height', (amount.countStep + amount.countStage)*82+'px');
+    this.$('.log-body').css('height', (amount.countStep + amount.countStage) * 82 + 'px');
   },
 
   willDestroyElement: function() {

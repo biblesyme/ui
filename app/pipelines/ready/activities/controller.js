@@ -5,10 +5,10 @@ export default Ember.Controller.extend({
   sortBy: 'start_ts',
   descending: true,
   modalService: Ember.inject.service('modal'),
-  waitingForApproval: function () {
+  waitingForApproval: function() {
     let out = this.get('model')
       .filter(ele => {
-        if(ele.status === 'Pending'){
+        if (ele.status === 'Pending') {
           return true
         }
         return false
@@ -19,21 +19,22 @@ export default Ember.Controller.extend({
     var status = this.get('status');
     let out = this.get('model')
       .filter(ele => {
-        if(ele.status === 'Pending'){
+        if (ele.status === 'Pending') {
           return false
         }
         if (status === 'all') {
           return true
         }
-        if(status==="running"
-            &&ele.status!=='Success'
-            &&ele.status!=='Fail'
-            &&ele.status!=='Denied'){
+        if (status === "running" &&
+          ele.status !== 'Success' &&
+          ele.status !== 'Fail' &&
+          ele.status !== 'Denied' &&
+          ele.status !== 'Abort') {
           return true
         }
-        if(status === 'fail'
-            &&ele.status === 'Denied'){
-            return true
+        if (status === 'fail' &&
+          ele.status === 'Denied') {
+          return true
         }
         return ele.status === status
       });
@@ -42,12 +43,10 @@ export default Ember.Controller.extend({
   actions: {
     runPipelines: function() {
       this.get('modalService').toggleModal('modal-pipeline-run', {
-        cb: (pipelines) => {
-          console.log(pipelines)
-        }
+        cb: () => {}
       });
     },
-    sendAction: function (model, action) {
+    sendAction: function(model, action) {
       return model.send(action)
     },
   }

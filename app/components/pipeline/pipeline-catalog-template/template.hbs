@@ -16,7 +16,7 @@
               value=file.body
               valueUpdated=(action (mut file.body))
               options=(hash autofocus=true lineNumbers=true 
-              mode=(pipeline-file-extension file.name) readOnly=true readOnly=(if (eq modalOpts.type 'review') true false))
+              mode=(pipeline-file-extension file.name) readOnly=true readOnly=true)
               }}
           </div>
         {{/if}}

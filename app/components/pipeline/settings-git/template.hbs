@@ -60,39 +60,17 @@
     </div>
     <hr/>
     {{#if hasPrivateAccounts}}
-      <p>Private</p>
       <ul class="row list-unstyled gh-block-list mt-10">
         {{#each accountsInfo as |item|}}
-          {{#if (eq item.rancherUserId accountId)}}
-          <li class="col span-6" style="padding-right: 50px; position: relative; top:0; border-bottom: 1px solid #F15354;">
+          <li class="col span-6 average" style="padding-right: 50px; position: relative; top:0; border-bottom: 1px solid #F15354;">
             <div>
               {{#identity-block identity=item}}
               {{/identity-block}}
             </div>
-            <button {{action "shareAccount" item}} class="btn bg-transparent" style="position: absolute; right:70px; top: 0; height: 40px; width: 40px; padding: 0; {{if item.actionLinks.share '' 'border-radius:50%; border: 1px solid #78C9CF'}}">
-              <i class="icon icon-share {{if item.actionLinks.share 'text-muted' 'text-info'}}"></i>
-            </button>
-
             <button {{action "removeAccount" item}} class="btn bg-error" style="position: absolute; right:0; top: 0; height: 100%; border-radius: 0;">
               <i class="icon icon-close"></i>
             </button>
           </li>
-          {{/if}}
-        {{/each}}
-      </ul>
-    {{/if}}
-    {{#if hasPublicAccounts}}
-      <p>Public</p>
-      <ul class="row list-unstyled gh-block-list mt-10">
-        {{#each accountsInfo as |item|}}
-          {{#if (not-eq item.rancherUserId accountId)}}
-          <li class="col span-6" style="padding-right: 50px; position: relative; top:0;">
-            <div>
-              {{#identity-block identity=item}}
-              {{/identity-block}}
-            </div>
-          </li>
-          {{/if}}
         {{/each}}
       </ul>
     {{/if}}

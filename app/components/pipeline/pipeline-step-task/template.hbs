@@ -2,10 +2,10 @@
 <div class="inline-form">
   <div class="pt-10"></div>
   <label>{{check-box class="form-control" checked=selectedModel.isService disabled=(if (eq modalOpts.type 'review') true false)}}
-    As a Service
+    Run As a Service
     {{#tooltip-element 
       type="tooltip-basic"
-      model="You can use this option to launch a database service. For more detail, please see the document."
+      model="Click this to make it a long running process/container."
       tooltipTemplate='tooltip-static'
       aria-describedby="tooltip-base"
       tooltipFor="audit-log"}}
@@ -43,7 +43,6 @@
       disabled=(if (eq modalOpts.type 'review') true false)
     }}
   {{/if}}
-  
 </div>
 
 <section class="header has-tabs clearfix">
@@ -59,7 +58,7 @@
 
 {{#if selectedModel.isShell}}
   <div class="inline-form">
-    <label>{{t 'newPipelineStep.jobType.task.command'}}(shell)</label>
+    <label>{{t 'newPipelineStep.jobType.task.command'}}(shell) {{field-required}}</label>
     <div class="pt-10"></div>
     {{pipeline/pipeline-codemirror
       value=selectedModel.shellScript
@@ -91,26 +90,17 @@
 
 
 <div class="pt-30"></div>
-{{#if (eq modalOpts.type 'review')}}
-  {{#if parmStr}}
-  <div class="inline-form">
-    <label>{{t 'newContainer.environment.label'}}</label>
-    <div class="pt-10"></div>
-    {{parmStr}}
-  </div>
-  {{/if}}
-{{else}}
   {{form-key-value
+    allowMultilineValue=false
     initialMap=selectedModel.env
     changed=(action (mut selectedModel.env))
     allowEmptyValue=false
-    editing=true
+    editing=(if (eq modalOpts.type 'review') false true)
     normalHeader=(t 'newContainer.environment.label')
     addActionLabel="newContainer.environment.addAction"
     keyLabel="newContainer.environment.keyLabel"
     keyPlaceholder="newContainer.environment.keyPlaceholder"
     valueLabel="newContainer.environment.valueLabel"
-    valuePlaceholder="newContainer.environment.valuePlaceholder"
+    valuePlaceholder="e.g. bar"
     disabled=(if (eq modalOpts.type 'review') true false)
   }}
-{{/if}}

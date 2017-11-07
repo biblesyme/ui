@@ -12,8 +12,8 @@ var convertObjectToArry = function(obj) {
   return arry;
 };
 
-var validateConditions = function(step){
-  if(!step.expressions){
+var validateConditions = function(step) {
+  if (!step.expressions) {
     Ember.set(step, 'conditions', {});
   }
 }
@@ -47,7 +47,8 @@ class StepType {
         1.sc
         2.file
         */
-        this.dockerFilePath = './';
+        this.dockerFilePath = './Dockerfile';
+        this.buildPath = '.'
         this.targetImage = '';
         this.sourceType = 'sc';
         this.push = false;
@@ -83,7 +84,7 @@ class StepType {
           name: 'rancher-compose.yml',
           body: ''
         }];
-        this.templates={};
+        this.templates = {};
         this.deploy = false;
         this.deployEnv = 'local';
         this.stackName = '';
@@ -105,8 +106,8 @@ class StepType {
         break;
     }
     // conditions
-    this.expressions=false;
-    this.conditions={};
+    this.expressions = false;
+    this.conditions = {};
     if (val && typeof val === 'object') {
       for (var item in val) {
         if (val.hasOwnProperty(item)) {
@@ -124,7 +125,7 @@ var validationErrors = (module) => {
       if (module.repository.indexOf('.git') === -1) {
         errors.push('Repository should be a valid git address!');
       }
-      if(!module.branch){
+      if (!module.branch) {
         errors.push('"Branch" is required!')
       }
       Ember.set(module, 'repository', module.repository.trim());
@@ -136,8 +137,14 @@ var validationErrors = (module) => {
       if (module.isService && module.alias.trim() === '') {
         errors.push('"Name" is required!');
       }
-      if(!module.isShell){
+      if (!module.isShell) {
         Ember.set(module, 'shellScript', '');
+      }else{
+        if(module.shellScript.trim() === ''){
+          errors.push('"Command" is required!')
+        }
+        Ember.set(module, 'entrypoint', '');
+        Ember.set(module, 'args', '');
       }
       break;
     case 'build':
@@ -148,7 +155,7 @@ var validationErrors = (module) => {
         if (module.dockerFilePath.trim() === '') {
           errors.push('"Dockerfile Path" is required!');
         }
-        Ember.set(module,'dockerFileContent',"");
+        Ember.set(module, 'dockerFileContent', "");
       } else {
         if (module.dockerFileContent.trim() === '') {
           errors.push('"Dockerfile" is required!');
@@ -169,17 +176,23 @@ var validationErrors = (module) => {
         if (!module.secretkey) {
           errors.push('"Secretkey" is required!');
         }
+      }else{
+        Ember.set(module, 'endpoint',null);
+        Ember.set(module, 'accesskey',null);
+        Ember.set(module, 'secretkey',null);
       }
-      Ember.set(module,'batchSize',module.batchSize*1);
-      Ember.set(module,'interval',module.interval*1);
-      
+      if (Object.keys(module.serviceSelector).length < 1) {
+        errors.push('"Service Selector is required!"')
+      }
+      Ember.set(module, 'batchSize', module.batchSize * 1);
+      Ember.set(module, 'interval', module.interval * 1);
       break;
     case 'upgradeStack':
       if (!module.stackName) {
         errors.push('"Stack Name" is required!');
       }
 
-      if (module.endpoint) {
+      if (module.deployEnv === 'others') {
         if (module.endpoint.trim() === '') {
           errors.push('"Endpoint" is required!');
         }
@@ -189,10 +202,14 @@ var validationErrors = (module) => {
         if (!module.secretkey) {
           errors.push('"Secretkey" is required!');
         }
+      }else{
+        Ember.set(module, 'endpoint',null);
+        Ember.set(module, 'accesskey',null);
+        Ember.set(module, 'secretkey',null);
       }
       break;
     case 'upgradeCatalog':
-      if (module.endpoint) {
+      if (module.deployEnv === 'others') {
         if (module.endpoint.trim() === '') {
           errors.push('"Endpoint" is required!');
         }
@@ -202,18 +219,22 @@ var validationErrors = (module) => {
         if (!module.secretkey) {
           errors.push('"Secretkey" is required!');
         }
+      }else{
+        Ember.set(module, 'endpoint',null);
+        Ember.set(module, 'accesskey',null);
+        Ember.set(module, 'secretkey',null);
       }
-      var templates ={};
-      module.filesAry.forEach((ele)=>{
-        templates[ele.name]=ele.body
+      var templates = {};
+      module.filesAry.forEach((ele) => {
+        templates[ele.name] = ele.body
       });
-      Ember.set(module,'templates',templates);
+      Ember.set(module, 'templates', templates);
       break;
     default:
       break;
   }
   validateConditions(module);
-  module.timeout&&(Ember.set(module,'timeout',module.timeout*1));
+  module.timeout && (Ember.set(module, 'timeout', module.timeout * 1)) || (Ember.set(module, 'timeout', null));
   return errors
 }
 export default Ember.Component.extend(ModalBase, {
@@ -237,7 +258,7 @@ export default Ember.Component.extend(ModalBase, {
           objectParameter[k] = v;
         }
       }
-      if(opts.params.templates&&opts.params.type==="upgradeCatalog"){
+      if (opts.params.templates && opts.params.type === "upgradeCatalog") {
         opts.params.filesAry = [];
         var keys = Object.keys(opts.params.templates);
         for (var i = 0; i < keys.length; i++) {
@@ -247,17 +268,17 @@ export default Ember.Component.extend(ModalBase, {
             body: opts.params.templates[key]
           })
         }
-      }else{
+      } else {
 
       }
-      if(opts.params.conditions&&Object.keys(opts.params.conditions).length){
+      if (opts.params.conditions && Object.keys(opts.params.conditions).length) {
         opts.params.expressions = true;
       }
-      if(opts.params.dockerFileContent){
-        opts.params.sourceType='file';
+      if (opts.params.dockerFileContent) {
+        opts.params.sourceType = 'file';
       }
       // initiate task shell Tab
-      if(opts.params.type==="task"&&(opts.params.shellScript===''||!opts.params.shellScript)){
+      if (opts.params.type === "task" && (opts.params.shellScript === '' || !opts.params.shellScript)) {
         opts.params.isShell = false;
       }
       this.set('type', opts.params.type);
@@ -270,7 +291,7 @@ export default Ember.Component.extend(ModalBase, {
       if (opts.stepMode === 'scm') {
         this.set('type', 'scm');
       }
-      this.set('editingModels',Ember.Object.create({}));
+      this.set('editingModels', Ember.Object.create({}));
       this.get('editingModels').set(this.get('type'), new StepType(this.get('type')));
     }
   },

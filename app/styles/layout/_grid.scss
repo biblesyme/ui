@@ -42,6 +42,9 @@ $GUTTER: 1.5%;
   @while $span > 0 {
     // Normal column with a gutter
     .span-#{$span}#{$suffix} { width: decimal-round( (((100 - ($GUTTER * ($cols - 1))) / $cols) * $span) + (($span - 1) * $GUTTER) , 3, 'floor'); }
+    
+    // Reset last child when multi average span
+    .span-#{$span}#{$suffix}.average:nth-child(#{$cols / $span }) { margin-right: 0; }
 
     // Gutterless column
     .gutless .span-#{$span}#{$suffix} { margin-right: 0; width: decimal-round( $span / $cols * 100%, 3, 'floor'); }

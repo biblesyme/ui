@@ -1,11 +1,3 @@
-{{#if editing}}
-  <div>
-    <button class="btn bg-link icon-btn" {{action "addSchedulingRule"}}>
-      <span class="darken"><i class="icon icon-plus text-small"/></span>
-      <span>Add Expressions</span>
-    </button>
-  </div>
-{{/if}}
 {{#if labelArray.length}}
   <table class="table fixed no-lines mt-20">
     <thead>
@@ -17,7 +9,7 @@
         <th class="acc-label" width="60">Operator</th>
         <th width="20"></th>
         <th class="acc-label" width="150">Value</th>
-        <th width="180"></th>
+        <th width="40"></th>
       </tr>
     </thead>
     <tbody>
@@ -37,4 +29,12 @@
   </table>
 {{else}}
   <div class="text-muted pt-10">No Expressions yet.</div>
+{{/if}}
+{{#if editing}}
+  <div class="pull-right">
+    <button class="btn bg-link icon-btn" {{action "addSchedulingRule"}}>
+      <span class="darken"><i class="icon icon-plus text-small"/></span>
+      <span>Add Expressions</span>
+    </button>
+  </div>
 {{/if}}

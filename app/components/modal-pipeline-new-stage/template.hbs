@@ -23,6 +23,38 @@
 </div>
 {{/if}}
 
+<div class="pt-20"></div>
+<div class="inline-form">
+  <label>{{check-box class="form-control" checked=model.expressions disabled=(if (eq modalOpts.mode 'review') true)}}
+    Conditions 
+  </label>
+  <div class="pt-10"></div>
+  {{#if model.expressions}}
+    {{pipeline/pipeline-expressions
+      pipeline=modalOpts.pipeline
+      model=model
+      editing=(if (not-eq modalOpts.mode 'review') true false)
+    }}
+  {{/if}}
+</div>
+
+<div class="pt-20"></div>
+<div class="inline-form">
+  <label>
+    Step Running Mode
+  </label>
+  {{new-select
+    content=parallelChoice
+    value=parallel
+    disabled=(if (eq modalOpts.type 'review') true false)
+  }}
+  {{#if model.parallel}}
+    <p class="mt-0 text-small text-info mb-0">Make steps running simultaneously</p>
+  {{else}}
+    <p class="mt-0 text-small text-info mb-0">Make steps running sequentially</p>
+  {{/if}}
+</div>
+
 
 <div class="pt-20"></div>
 <div class="inline-form">
@@ -59,7 +91,7 @@
         as |sortable kind row dt|
       }}
         {{#if (eq kind "row")}}
-          {{account-row model=row isLocal=isLocal}}
+          {{pipeline/account-row model=row isLocal=isLocal}}
         {{else if (eq kind "norows")}}
           <td colspan="{{if isLocal '6' '5'}}" class="text-center text-muted pt-20 pb-20">{{t 'accountsPage.index.table.noData'}}</td>
         {{/if}}
@@ -69,27 +101,6 @@
 </div>
 {{/if}}
 
-<div class="pt-20"></div>
-<div class="inline-form">
-  <label>{{check-box class="form-control" checked=model.expressions disabled=(if (eq modalOpts.mode 'review') true)}}
-    Conditions 
-  </label>
-  <div class="pt-10"></div>
-  {{#if model.expressions}}
-    {{pipeline/pipeline-expressions
-      model=model
-      editing=(if (not-eq modalOpts.mode 'review') true false)
-    }}
-  {{/if}}
-</div>
-
-<div class="pt-20"></div>
-<div class="inline-form">
-  <label>{{check-box class="form-control" checked=model.parallel disabled=(if (eq modalOpts.mode 'review') true)}}
-    Parallel
-  </label>
-  <p class="mt-0 text-small text-info">This option is used to make steps running parallel</p>
-</div>
 {{#if (eq modalOpts.mode 'review')}}
   <div style="text-align: center" class="mt-20 text-center">
     <button {{action "cancel"}} class="btn bg-transparent">{{t "generic.cancel"}}</button>

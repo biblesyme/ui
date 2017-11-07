@@ -11,6 +11,15 @@ export default Resource.extend({
   type: 'pipeline',
   pipelineStore: Ember.inject.service('pipeline-store'),
   router: Ember.inject.service(),
+  displayName: function(){
+    return this.get('name')
+  }.property('name'),
+  cb() {
+    this.doAction('remove').then(()=>{
+      var store = this.get('pipelineStore');
+      store._remove('pipeline',this);
+    })
+  },
   actions: {
     run: function() {
       return this.doAction('run')
@@ -26,13 +35,14 @@ export default Resource.extend({
       })
     },
     edit: function() {
-      this.get('router').transitionTo('pipelines.pipeline', this.get('id'))
+      this.get('router').transitionTo('pipelines.pipeline', this.get('id'), {
+        queryParams: {
+          mode: ''
+        }
+      })
     },
-    remove: function() {
-      return this.doAction('remove').then(()=>{
-        var store = this.get('pipelineStore');
-        store._remove('pipeline',this);
-      });
+    remove:function(){
+      this.get('modalService').toggleModal('confirm-delete', {resources: [this]});
     },
     activate: function() {
       return this.doAction('activate');

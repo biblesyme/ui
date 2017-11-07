@@ -74,9 +74,13 @@ export default Ember.Component.extend({
       var initCatalogTemplateId = this.get('selectedModel.externalId');
       if(initCatalogTemplateId){
         var catalogInfo = initCatalogTemplateId.split(':');
+        var catalogName = catalogInfo[0];
         var templateFolderPath = catalogInfo[1].split('*');
         var templateFolderName = templateFolderPath[templateFolderPath.length-1];
-        var selectedTemplate = res.catalog.find(ele=>ele.folderName===templateFolderName);
+        var selectedTemplate = res.catalog[0];
+        if(this.get('catalogId') === catalogName){
+          selectedTemplate = res.catalog.find(ele=>ele.folderName===templateFolderName);
+        }
         selectedTemplate&&this.set('selectedTemplate',selectedTemplate);
       }
       selectedTemplate = this.get('selectedTemplate');

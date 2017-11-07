@@ -28,29 +28,30 @@ export default Service.extend({
   unregisterInstance(id) {
     delete this._instances[id];
   },
-  getMatchedHint(value, editor){
+  getMatchedHint(value, editor) {
     var hintAry = this.get('hintAry');
-    var cursorPosition = editor.getCursor().ch;
-    var cursorValue = editor.getLine(editor.lastLine()).slice(0, cursorPosition);
-    
+    var cur = editor.getCursor();
+    var cursorPosition = cur.ch;
+    var cursorValue = editor.getLine(cur.line).slice(0, cursorPosition);
+
     var matched = false;
     var _$valueIndex = cursorValue.lastIndexOf('$');
 
-    var _$value = cursorValue.slice(_$valueIndex,cursorValue.length);
+    var _$value = cursorValue.slice(_$valueIndex, cursorValue.length);
     var matchedArry = [];
-    if(_$value){
+    if (_$value) {
       for (var i = 0; i < hintAry.length; i++) {
         var item = hintAry[i];
         //if matched on end
-        if((item.indexOf(_$value) === 0)){
+        if ((item.indexOf(_$value) === 0)) {
           matched = true;
           matchedArry.push(item);
         }
       }
       if (matched) {
-        return {matchedArry:matchedArry,index: cursorPosition - _$valueIndex};
+        return { matchedArry: matchedArry, index: cursorPosition - _$valueIndex };
       }
     }
-    return {matchedArry:[],index:-1};
+    return { matchedArry: [], index: -1 };
   }
 });

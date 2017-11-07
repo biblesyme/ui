@@ -26,13 +26,19 @@
         fullRows=true
         as |sortable kind model dt|
       }}
-      <tr>
+      <tr class="main-row">
         {{#if (eq kind "row")}}
           <td data-title="{{t 'generic.name'}}:" >
             {{model.name}}
           </td>
+          <td data-title="{{t 'generic.name'}}:" >
+          {{#tooltip-element style="100%;" inlineBlock=true type="tooltip-basic" tooltipTemplate="tooltip-static" model=(date-str model.lastRunTime) tagName="span" tooltipFor="tooltip-basic"}}
+              <p class="mt-0 mb-0">#{{model.runCount}} {{model.lastRunStatus}}</p>
+              <p class="text-muted text-italic text-small mt-0 mb-0">{{date-from-now model.lastRunTime}}</p>
+            {{/tooltip-element}}
+          </td>
           <td data-title="{{t 'generic.actions'}}:" class="actions">
-            <a href="javascript:;" {{action "pipelineSelect" model}}><i class="icon icon-close"></i></a>
+            <a href="javascript:;" {{action "pipelineSelect" model}}><i class="icon icon-close text-error"></i></a>
           </td>
         {{else if (eq kind "norows")}}
           <td colspan="{{if isLocal '6' '5'}}" class="text-center pt-20 pb-20"><span class="text-muted">Not found what you need? click</span> <a href="javascript:void(0);" {{action "toAddPipelinePage"}}>here</a><span class="text-muted"> to add a new pipeline</span></td>

@@ -5,6 +5,14 @@ import ModalBase from 'ui/mixins/modal-base';
 const showKinds = ['user','admin'];
 
 export default Ember.Component.extend(ModalBase, NewOrEdit, {
+  parallelChoice:[{
+    label: 'parallel',
+    value: 'true'
+  },{
+    label: 'serial',
+    value: 'false'
+  }],
+  parallel: 'true',
   access: Ember.inject.service(),
   classNames: ['large-modal', 'alert'],
   modalOpts: Ember.computed.alias('modalService.modalOpts'),
@@ -15,6 +23,14 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
   sortBy: 'name',
   userList: [],
   errors: [],
+  syncParallel: function(){
+    var parallel = this.get('parallel');
+    if(parallel === 'true'){
+      this.set('model.parallel', true);
+    }else{
+      this.set('model.parallel', false);
+    }
+  }.observes('parallel'),
   selectedList: function() {
     var selectedList = this.get('userList').filter(ele => !!ele.selected);
     return selectedList;
@@ -67,6 +83,12 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
       this.set('model', opts.stage);
       this.set('editing', true);
       var approvers = opts.stage.approvers;
+      // init parallel
+      if(opts.stage.parallel){
+        this.set('parallel', 'true');
+      }else{
+        this.set('parallel', 'false');
+      }
     } else {
       this.set('model', {
         id: null,
@@ -75,7 +97,9 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
         steps: []
       })
     }
-
+   if (opts.stage&&opts.stage.conditions && Object.keys(opts.stage.conditions).length) {
+      this.set('model.expressions', true);
+    }
     this.get('userStore')
       .find('account', null, {filter: {'kind_ne': ['service','agent']}, forceReload: true})
         .then((user)=>{
@@ -117,6 +141,7 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
       this.send('cancel');
     },
     edit: function(success) {
+      debugger
       var added = this.get('modalOpts').cb({
         ...this.get('model'),
         id: Date.now(),

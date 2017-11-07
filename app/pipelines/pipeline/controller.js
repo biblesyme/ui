@@ -25,8 +25,11 @@ export default Ember.Controller.extend({
         return model.pipeline.doAction('update', model.pipeline.serialize())
       })()
       .then(() => {
+        success(true)
         this.set('errors',null);
         this.transitionToRoute('pipelines.ready.pipelines')
+      }).finally(()=>{
+        success(false)
       })
     },
     cancel: function() {
