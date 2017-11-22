@@ -1,12 +1,12 @@
 <div class="pt-20"></div>
 <div class="inline-form">
-  <label>Source of Dockerfile</label>
+  <label>{{t 'newPipelineStep.stepType.build.source'}}</label>
   <div class="pt-10"></div>
   <label class="mr-30">{{radio-button selection=selectedModel.sourceType value="sc" disabled=(if (eq modalOpts.type 'review') true false)}}
-      Read from source code
+      {{t 'newPipelineStep.stepType.build.readSourceCode'}}
   </label>
   <label class="mr-30">{{radio-button selection=selectedModel.sourceType value="file" disabled=(if (eq modalOpts.type 'review') true false)}}
-      Read from a file
+      {{t 'newPipelineStep.stepType.build.readFile'}}
   </label>
 </div>
 {{#if (eq selectedModel.sourceType 'file')}}
@@ -29,7 +29,7 @@
 {{else}}
   <div class="pt-20"></div>
   <div class="inline-form">
-    <label>Dockerfile Path(relative to workspace){{field-required}}</label>
+    <label>{{t 'newPipelineStep.stepType.build.dockerFilePath'}}{{field-required}}</label>
     <div class="pt-10"></div>
     {{input class="form-control" value=selectedModel.dockerFilePath placeholder="Dockerfile Path" disabled=(if (eq modalOpts.type 'review') true false)}}
   </div>
@@ -37,7 +37,14 @@
 
 <div class="pt-20"></div>
 <div class="inline-form">
-  <label>Image Tag{{field-required}}</label>
+  <label>{{t 'newPipelineStep.stepType.build.buildPath'}}{{field-required}}</label>
+  <div class="pt-10"></div>
+  {{input class="form-control" value=selectedModel.buildPath placeholder="Dockerfile Path" disabled=(if (eq modalOpts.type 'review') true false)}}
+</div>
+
+<div class="pt-20"></div>
+<div class="inline-form">
+  <label>{{t 'newPipelineStep.stepType.build.imageTag'}}{{field-required}}</label>
   <div class="pt-10"></div>
   {{#if (eq modalOpts.type 'review')}}
     {{input class="form-control" value=selectedModel.targetImage placeholder="hello-world:latest" disabled=(if (eq modalOpts.type 'review') true false)}}
@@ -52,13 +59,6 @@
 
 <div class="pt-20"></div>
 <div class="inline-form">
-  <label>Build Path(relative to workspace){{field-required}}</label>
-  <div class="pt-10"></div>
-  {{input class="form-control" value=selectedModel.buildPath placeholder="Dockerfile Path" disabled=(if (eq modalOpts.type 'review') true false)}}
-</div>
-
-<div class="pt-20"></div>
-<div class="inline-form">
   <div class="pt-10"></div>
   <label>
     {{#if detectingPush}}
@@ -68,27 +68,15 @@
         disabled=(if (eq modalOpts.type 'review') true (if selectedModel.targetImage false true))
       }}
     {{/if}}
-    Push {{#if (not-eq detectingPush true)}}{{#if selectedModel.push}}{{#if matchedRegistry}} <i class="icon icon-check text-success"></i> {{else}} <i class="icon icon-x text-error"></i> {{/if}}{{/if}}{{/if}}
+    {{t 'newPipelineStep.stepType.build.push'}} {{#if (not-eq detectingPush true)}}{{#if selectedModel.push}}{{#if matchedRegistry}} <i class="icon icon-check text-success"></i> {{else}} <i class="icon icon-x text-error"></i> {{/if}}{{/if}}{{/if}}
   </label>
 </div>
 {{#if selectedModel.push}}
-  {{!-- <div class="pt-20"></div>
-  <div class="inline-form">
-    <label>Username</label>
-    <div class="pt-10"></div>
-    {{input class="form-control" value=selectedModel.username placeholder="private registry username" disabled=(if (eq modalOpts.type 'review') true false)}}
-  </div>
-  <div class="pt-20"></div>
-  <div class="inline-form">
-    <label>Password</label>
-    <div class="pt-10"></div>
-    {{input type="password" class="form-control" value=selectedModel.password placeholder="private registry password" disabled=(if (eq modalOpts.type 'review') true false)}}
-  </div> --}}
   {{#if (not-eq detectingPush true)}}
   {{#if matchedRegistry}}
-    <p class="text-info">This image will be pushed to <code>{{matchedRegistry.serverAddress}}</code></p>
+    <p class="text-info">{{t 'newPipelineStep.stepType.build.pushTo'}} <code>{{matchedRegistry.serverAddress}}</code></p>
   {{else}}
-    <p class="text-error">The registry <code>{{resolvedRegistry}}</code> haven't been authenticated, click <a href="{{registriesRoute}}" target="_blank">here</a> to authenticate it.</p>
+    <p class="text-error">{{t 'newPipelineStep.stepType.build.pushWarning1'}}<code>{{resolvedRegistry}}</code> {{t 'newPipelineStep.stepType.build.pushWarning2'}} <a href="{{registriesRoute}}" target="_blank">{{t 'newPipelineStep.stepType.build.here'}}</a>{{t 'newPipelineStep.stepType.build.pushWarning3'}}</p>
   {{/if}}
   {{/if}}
 {{/if}}

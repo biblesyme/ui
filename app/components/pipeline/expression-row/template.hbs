@@ -1,11 +1,12 @@
 {{#if (eq index 0)}}
-<td rowspan="{{labelArray.length}}">
+<td rowspan="{{labelArray.length}}" style="position:relative;">
   {{new-select
     classNames="form-control input-sm"
     content=expressionsRelation
+    localizedLabel=true
     value=conditions.mode
   }}
-  <p class="text-small text-info mt-0 mb-0">{{selectedInfo}}</p>
+  <p class="text-small text-info mt-0 mb-0 pull-left" style="position: absolute;">{{t selectedInfo}}</p>
 </td>
 {{/if}}
 <td></td>

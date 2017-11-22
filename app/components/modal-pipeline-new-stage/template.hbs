@@ -48,7 +48,7 @@
     value=parallel
     disabled=(if (eq modalOpts.type 'review') true false)
   }}
-  {{#if model.parallel}}
+  {{#if (eq parallel 'true')}}
     <p class="mt-0 text-small text-info mb-0">Make steps running simultaneously</p>
   {{else}}
     <p class="mt-0 text-small text-info mb-0">Make steps running sequentially</p>

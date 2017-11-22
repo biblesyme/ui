@@ -10,3 +10,8 @@
 <main class="clearfix">
   {{outlet}}
 </main>
+{{#unless isPopup}}
+  {{page-footer
+    showAbout="showAbout"
+  }}
+{{/unless}}

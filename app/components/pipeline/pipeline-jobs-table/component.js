@@ -5,7 +5,7 @@ export const headersAll =  [
     name: 'name',
     sort: ['name'],
     searchField: 'name',
-    label: 'Name'
+    translationKey: 'generic.name',
   },
   {
     name: 'repository',
@@ -19,19 +19,19 @@ export const headersAll =  [
     sort: ['lastRunId'],
     width: '200px',
     searchField: 'activity',
-    label: 'Last Activity'
+    translationKey: 'pipelinesPage.lastActivity',
   },
   {
     name: 'nextRunTime',
     sort: ['nextRunTime'],
     searchField: 'nextRunTime',
-    label: 'Next Run'
+    translationKey: 'pipelinesPage.nextRun',
   },
   {
     name: 'isActivate',
     sort: ['isActivate'],
     searchField: 'isActivate',
-    label: 'Status'
+    translationKey: 'generic.state',
   }
 ];
 

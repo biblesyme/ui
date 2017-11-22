@@ -5,7 +5,7 @@ export const headersAll =  [
     name: 'name',
     sort: ['name'],
     searchField: 'pipelineSource.name',
-    // translationKey: 'generic.pipelineName',
+    translationKey: 'generic.pipeline',
     label: 'Pipeline'
   },
   {
@@ -19,7 +19,7 @@ export const headersAll =  [
     name: 'start_ts',
     sort: ['start_ts'],
     searchField: 'start_ts',
-    // translationKey: 'generic.time',
+    translationKey: 'generic.time',
     label: 'Time'
   },
   {
@@ -27,7 +27,7 @@ export const headersAll =  [
     sort: ['status'],
     width: 200,
     searchField: 'status',
-    translationKey: 'pipelinesPage.table.status',
+    translationKey: 'generic.state',
   },
 ];
 

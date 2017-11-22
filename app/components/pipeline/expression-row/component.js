@@ -21,8 +21,8 @@ export default Ember.Component.extend({
     var rule = this.get('rule');
     rule.opt||this.set('rule.opt','=')
   },
-  expressionsRelation: [{label: 'Any of these', value: 'any', info:'Run when at least one of the conditions are met'}
-  ,{label: 'All of these', value: 'all', info:'Run when all of the conditions are met'}],
+  expressionsRelation: [{label: 'newPipelineStep.stepType.allThese', value: 'any', info:'newPipelineStep.stepType.allTheseInfo'}
+  ,{label: 'newPipelineStep.stepType.anyThese', value: 'all', info:'newPipelineStep.stepType.anyTheseInfo'}],
   selectedInfo: function(){
     var relation = this.get('expressionsRelation').find(ele => ele.value===this.get('conditions.mode'));
     return relation?relation.info:'';

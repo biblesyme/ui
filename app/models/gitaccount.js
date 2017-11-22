@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import Resource from 'ember-api-store/models/resource';
-import PolledResource from 'ui/mixins/cattle-polled-resource';
 
-var Account = Resource.extend(PolledResource, {
+var Account = Resource.extend({
   type: 'gitaccount',
   modalService: Ember.inject.service('modal'),
   cb() {

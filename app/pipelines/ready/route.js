@@ -12,8 +12,10 @@ export default Ember.Route.extend({
     return model
   },
   afterModel: function(model) {
-    if (!model.length) {
-      router.transitionTo('pipelines.ready.pipelines');
+    if (!model.content.length) {
+      this.get('router').transitionTo('pipelines.ready.pipelines');
+    }else{
+      this.get('router').transitionTo('pipelines.ready.activities');
     }
   },
 });

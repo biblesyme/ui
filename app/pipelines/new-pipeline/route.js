@@ -9,7 +9,7 @@ export default Ember.Route.extend({
     }
     var pipelineStore = this.get('pipelineStore');
     var pipeline = pipelineStore.createRecord({type:'pipeline'});
-    return Ember.RSVP.hash({accounts: pipelineStore.find('gitaccount')}).then(({accounts})=>{
+    return Ember.RSVP.hash({accounts: pipelineStore.findAll('gitaccount')}).then(({accounts})=>{
       return Ember.Object.create({
         pipeline,
         accounts: accounts

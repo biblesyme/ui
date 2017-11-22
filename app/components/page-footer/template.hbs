@@ -1,4 +1,4 @@
-<a href="#" class="btn btn-sm bg-transparent" {{action "showAbout"}} aria-label="About Rancher">{{if settings.rancherVersion settings.rancherVersion (t 'pageFooter.notARelease')}}</a>
+{{!-- <a href="#" class="btn btn-sm bg-transparent" {{action "showAbout"}} aria-label="About Rancher">{{if settings.rancherVersion settings.rancherVersion (t 'pageFooter.notARelease')}}</a>
 
 {{#if (or app.isCaas settings.isRancher)}}
   {{#if projectId}}
@@ -23,12 +23,12 @@
       <li><a href="{{cli.linux}}">{{t 'pageFooter.download.linux'}} <i class="icon icon-fw icon-linux"></i></a></li>
     </ul>
   </div>
-</div>
+</div> --}}
 <div class="pull-right">
   {{language-dropdown classNames="dropup"}}
 </div>
-{{#if prefs.showSystemControl}}
+{{!-- {{#if prefs.showSystemControl}}
   <div class="pull-right">
     <label class="btn btn-sm">{{input type="checkbox" checked=prefs.showSystemResources}} {{t 'pageFooter.showSystem'}}</label>
   </div>
-{{/if}}
+{{/if}} --}}

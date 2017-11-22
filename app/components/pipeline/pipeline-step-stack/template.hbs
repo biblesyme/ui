@@ -1,6 +1,6 @@
 <div class="pt-20"></div>
 <div class="inline-form">
-  <label>Stack Name {{field-required}}</label>
+  <label>{{t 'newPipelineStep.stepType.stack.stackName'}} {{field-required}}</label>
   <div class="pt-10"></div>
   {{input
     class="js-var-hint"
@@ -12,7 +12,7 @@
 
 <div class="pt-20"></div>
 <section class="box mb-20">
-<h4>Edit your Template Using CI parameters</h4>
+<h4>{{t 'newPipelineStep.stepType.stack.editTemplate'}}</h4>
 <div class="tabs">
   <ul class="tab-header" role="tablist">
     <li role="tab" {{action "selectPreviewTab" "dockerCompose"}} class="{{if (eq previewTab 'dockerCompose') 'active' ''}}"><a href="#">docker-compose.yml {{copy-to-clipboard clipboardText=selectedModel.dockerCompose size="small"}}</a></li>
@@ -39,7 +39,7 @@
       }}
     </div> 
     {{/if}}
-  <p class="text-info text-small">You just need to write supplement of the compose file.</p>
+  <p class="text-info text-small">{{t 'newPipelineStep.stepType.stack.editTemplateTip'}}</p>
   </div>
 </div>
 

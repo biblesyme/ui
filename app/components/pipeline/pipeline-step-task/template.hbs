@@ -2,10 +2,10 @@
 <div class="inline-form">
   <div class="pt-10"></div>
   <label>{{check-box class="form-control" checked=selectedModel.isService disabled=(if (eq modalOpts.type 'review') true false)}}
-    Run As a Service
+    {{t 'newPipelineStep.stepType.task.runAsService'}}
     {{#tooltip-element 
       type="tooltip-basic"
-      model="Click this to make it a long running process/container."
+      model=(t 'newPipelineStep.stepType.task.runAsServiceTip')
       tooltipTemplate='tooltip-static'
       aria-describedby="tooltip-base"
       tooltipFor="audit-log"}}
@@ -16,7 +16,7 @@
 {{#if selectedModel.isService}}
 <div class="pt-20"></div>
 <div class="inline-form">
-  <label>Name{{field-required}}</label>
+  <label>{{t 'generic.name'}}{{field-required}}</label>
   <div class="pt-10"></div>
   {{input
     class="js-var-hint"
@@ -28,7 +28,7 @@
 {{/if}}
 <div class="pt-20"></div>
 <div class="inline-form">
-  <label>{{t 'newPipelineStep.jobType.image'}}{{field-required}}</label>
+  <label>{{t 'newPipelineStep.stepType.image'}}{{field-required}}</label>
   <div class="pt-10"></div>
   {{#if (eq modalOpts.type 'review')}}
     {{input
@@ -48,17 +48,17 @@
 <section class="header has-tabs clearfix">
   <ul class="tab-nav">
     <li {{action "changeTaskModel" true}}>
-      <a href="javascript:void(0);" class="{{if (eq selectedModel.isShell true) 'active' (if (eq modalOpts.type 'review') 'hide')}} ember-view">Shell Script</a>
+      <a href="javascript:void(0);" class="{{if (eq selectedModel.isShell true) 'active' (if (eq modalOpts.type 'review') 'hide')}} ember-view">{{t 'newPipelineStep.stepType.task.shellScript'}}</a>
     </li>
     <li {{action "changeTaskModel" false}}>
-      <a href="javascript:void(0);" class="{{if (eq selectedModel.isShell false) 'active' (if (eq modalOpts.type 'review') 'hide')}} ember-view">Custom Entrypoint</a>
+      <a href="javascript:void(0);" class="{{if (eq selectedModel.isShell false) 'active' (if (eq modalOpts.type 'review') 'hide')}} ember-view">{{t 'newPipelineStep.stepType.task.customEntryPoint'}}</a>
     </li>
   </ul>
 </section>
 
 {{#if selectedModel.isShell}}
   <div class="inline-form">
-    <label>{{t 'newPipelineStep.jobType.task.command'}}(shell) {{field-required}}</label>
+    <label>{{t 'newPipelineStep.stepType.task.command'}}(shell) {{field-required}}</label>
     <div class="pt-10"></div>
     {{pipeline/pipeline-codemirror
       value=selectedModel.shellScript
@@ -68,7 +68,7 @@
   </div>
 {{else}}
   <div class="inline-form">
-    <label>EntryPoint</label>
+    <label>{{t 'newPipelineStep.stepType.task.entryPoint'}}</label>
     <div class="pt-10"></div>
     {{input
       value=selectedModel.entrypoint
@@ -78,7 +78,7 @@
   </div>
   <div class="pt-20"></div>
   <div class="inline-form">
-    <label>Command</label>
+    <label>{{t 'newPipelineStep.stepType.task.command'}}</label>
     <div class="pt-10"></div>
     {{input
       value=selectedModel.args

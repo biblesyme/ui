@@ -31,7 +31,7 @@
     {{#if showBranch}}
       <div class="pt-20"></div>
       <div class="inline-form">
-        <label>User{{field-required}}</label>
+        <label>{{t 'newPipelineStep.stepType.scm.user'}}{{field-required}}</label>
         <div class="pt-10"></div>
         {{#if (eq modalOpts.type 'review')}}
           {{input class="form-control" value=selectedModel.gitUser disabled=(if (eq modalOpts.type 'review') true false)}}
@@ -51,7 +51,7 @@
 
       <div class="pt-20"></div>
       <div class="inline-form">
-        <label>Repository{{field-required}}</label>
+        <label>{{t 'pipelineActivities.repository'}}{{field-required}}</label>
         <div class="pt-10"></div>
         {{#if (eq modalOpts.type 'review')}}
           {{input class="form-control" value=selectedModel.repository disabled=(if (eq modalOpts.type 'review') true false)}}
@@ -73,7 +73,7 @@
       </div>
       <div class="pt-20"></div>
       <div class="inline-form">
-        <label>Branch{{field-required}}</label>
+        <label>{{t 'newPipelineStep.stepType.scm.branch'}}{{field-required}}</label>
         <div class="pt-10"></div>
         {{input class="form-control js-disable-hint" value=selectedModel.branch placeholder="master" disabled=(if (eq modalOpts.type 'review') true false)}}
       </div>
@@ -90,11 +90,11 @@
           {{else}}
               {{check-box class="form-control" checked=selectedModel.webhook disabled=(if (eq modalOpts.type 'review') true false) }}
           {{/if}}
-          Webhook
+          {{t 'newPipelineStep.stepType.scm.webhook'}}
         </label>
         {{#tooltip-element 
           type="tooltip-basic"
-          model="Automatic trigger the pipeline when push to the repo."
+          model=(t 'newPipelineStep.stepType.scm.webhookTip')
           tooltipTemplate='tooltip-static'
           aria-describedby="tooltip-base"
           tooltipFor="audit-log"}}
@@ -105,15 +105,15 @@
             <div class="banner bg-warning">
               <div class="banner-icon"><span class="icon icon-alert"></span></div>
               <div class="banner-message">
-                <p>no permissions</p>
+                <p>{{t 'newPipelineStep.stepType.scm.nopermission'}}</p>
               </div>
             </div>
           {{/if}}
         {{/if}}
       </div>
     {{else}}
-      <p>Please finish the OAuth of GitHub in {{#link-to "pipelines.ready.settings" target="_blank"}}setting page{{/link-to}} first.</p>
-      <p class="text-warning">Note: Have finished the OAuth? <a href="javascript:void();" {{action "reload"}}>click here</a> to load your repository</p>
+      <p>{{t 'newPipelineStep.stepType.scm.settingWarning1'}} {{#link-to "pipelines.ready.settings" target="_blank"}}{{t 'newPipelineStep.stepType.scm.settingWarning2'}}{{/link-to}} {{t 'newPipelineStep.stepType.scm.settingWarning3'}}</p>
+      <p class="text-warning">{{t 'newPipelineStep.stepType.scm.note'}}: {{t 'newPipelineStep.stepType.scm.finishOauth1'}}<a href="javascript:void();" {{action "reload"}}>{{t 'newPipelineStep.stepType.scm.finishOauth2'}}</a> {{t 'newPipelineStep.stepType.scm.finishOauth3'}}</p>
     {{/if}}
   {{/if}}
 {{/if}}

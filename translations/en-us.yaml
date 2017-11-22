@@ -28,6 +28,7 @@ generic:
   domainName: Domain Name
   dockerId: Docker ID
   emptyString: ""
+  edit: Edit
   enable: Enable
   enabled: Enabled
   entrypoint: Entrypoint
@@ -66,12 +67,14 @@ generic:
   service: Service
   stack: Stack
   state: State
+  status: Status
   test: Test
   testing: Testing
   to: To
   total: Total
   type: Type
   timeStamp: Timestamp
+  time: Time
   unknown: Unknown
   uuid: UUID
   no: "No"
@@ -566,11 +569,31 @@ pipelinesPage:
     status: Status
     noData: There are no pipelines to show.
     noMatch: No pipelines match the current search.
-  run: Run Pipeline
-  save: Save
-  cancel: Cancel
-  addStage: Add a Stage
-  newStage: New Stage
+  add: Add Pipeline
+  pipelines: Pipelines
+  import: Import pipeline.yml
+  active: Active
+  inactive: Inactive
+  lastActivity: LastActivity
+  nextRun: NextRun
+
+
+pipelineActivities:
+  activities: Activities
+  all: All
+  running: Running
+  success: Success
+  fail: Fail
+  pending: Pending
+  pipline: Pipeline
+  repository: Repository
+  time: Time
+  status: Status
+  deny: Deny
+  approve: Approve
+  rerun: Rerun
+  waitingApproval: Waiting Approval
+  runPipeline: Run Pipeline
 
 newPipeline:
   header: Add Pipeline
@@ -598,35 +621,90 @@ newPipeline:
   save: Save
   add: Add
 
-pipelineDetail:
-  history:
-    noData: There are no history to show.
-  addStep: Add Step
-
 newPipelineStage:
   header:
     create: Add a Stage
     edit: Edit Stage
   name: Name
+  addStep: Add a Step
 
 newPipelineStep:
   header:
     create: Add a step to stage
     edit: Edit step
-  jobType:
+  stepType:
     label: Step Type
     image: Image
+    scm:
+      label: Source Code Management
+      warning: To create your pipeline, please specify the source code repo
+      user: User
+      branch: Branch
+      webhook: Webhook
+      webhookTip: Automatically trigger the pipeline when push to the repo.
+      noPermission: no permissions
+      settingWarning1: Please finish the OAuth of GitHub in
+      settingWarning2: click here
+      settingWarning3: to load your repository
+      note: Note
+      finishOauth1: Have finished the OAuth? 
+      finishOauth2: click here
+      finishOauth3: to load your repository
+    build:
+      label: build
+      source: Source of Dockerfile
+      readSourceCode: Read from source code
+      readFile: Read from a file
+      dockerFilePath: Dockerfile Path(relative to workspace)
+      imageTag: Image Tag
+      buildPath: Build Path(relative to workspace)
+      push: push
+      pushTo: This image will be pushed to
+      pushWarning1: The registry 
+      pushWarning2: haven't been authenticated, click
+      pushWarning3: to authenticate it.
     task:
       label: Task
+      runAsService: Run As a Service
+      runAsServiceTip: Click this to make it a long running process/container.
+      shellScript: Shell Script
+      customEntryPoint: Custom Entrypoint
       command: Command
       commandLabel: 'sh'
+      entryPoint: EntryPoint
+    stack:
+      label: upgradeStack
+      stackName: Stack Name
+      editTemplate: Edit your Template Using CI parameters
+      editTemplateTip: You just need to write supplement of the compose file.
     catalog:
-      label: Catalog
+      label: upgradeCatalog
+      select: Select
+      authWarning: Please add Authentication
+      selectApp: Select App
+      selectAppTip: select the app you want to upgrade
+      editTemplate: Edit your Template Using CI parameters
+      selectTemplate: Select Template From Old Version
+      selectTemplateTip: Select a version as the template to upgrade
+      upgrade: Upgrade to the latest version
+      upgradeTip: This option will help you upgrade catalog stack to the latest version.
     deploy:
       label: Deploy
       name: Name
       count: Count
-
+    timeout: Timeout
+    timeoutWarning: If a step does not complete by the specified amount of time (in minutes; at least 3), then the build will be terminated automatically and marked as Fail.
+    minutes: minutes
+    conditions: Conditions
+    addExpression: Add Expressions
+    noExpression: No Expressions yet.
+    allThese: Any of these
+    allTheseInfo: Run when at least one of the conditions are met
+    anyThese: All of these
+    anyTheseInfo: Run when all of the conditions are met
+    targetEnv:
+      label: Target other environment
+      tip: Default target is current environment, if you want target other enviroments, then check this option.
 # If you change translations here also change the translation in app/utils/constants.js under the FALLBACK_TRANSLATIONS key
 # those are present in case we have an error in the app and can not load the translations file
 # the error page will at least make a little sense

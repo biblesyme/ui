@@ -41,7 +41,7 @@ const navTree = [
   {
     id: 'pipelines',
     localizedLabel: 'nav.pipelines.tab',
-    route: 'pipelines.ready',
+    route: 'pipelines',
     ctx: [getProjectId],
     moreCurrentWhen: ['pipelines'],
     condition: function() {

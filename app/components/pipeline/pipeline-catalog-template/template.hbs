@@ -1,5 +1,5 @@
 <section class="box mb-20">
-<h4>Edit your Template Using CI parameters</h4>
+<h4>{{t 'newPipelineStep.stepType.catalog.editTemplate'}}</h4>
 <div class="tabs">
   <div class="{{if (not-eq selectTemplateFromOldVersion true) 'hide'}}">
     <ul class="tab-header" role="tablist">
@@ -50,14 +50,14 @@
   {{#if (not-eq modalOpts.type 'review')}}
     {{#if selectTemplateFromOldVersion}}
       <button class="btn bg-primary" {{action "setTemplate"}}>
-        Select
+        {{t 'generic.select'}}
       </button>
       <button class="btn bg-primary" {{action "setState" "selectTemplateFromOldVersion" false }}>
-        Cancel
+        {{t 'generic.cancel'}}
       </button> 
     {{else}}
       <button class="btn bg-primary" {{action "setState" "selectTemplateFromOldVersion" true }}>
-        Select Template From Old Version
+        {{t 'newPipelineStep.stepType.catalog.selectTemplate'}}
       </button>
     {{/if}}
   {{/if}}
@@ -76,7 +76,7 @@
           value=selectedTemplateUrl
           disabled=getTemplate.isRunning
         }}
-        <p class="text-info">Select a version as the template to upgrade</p>
+        <p class="text-info">{{t 'newPipelineStep.stepType.catalog.selectTemplateTip'}}</p>
       </div>
     </div>
   </div>
@@ -88,14 +88,14 @@
 <div class="pt-10"></div>
 <h2>
   <div class="checkbox pt-10">
-    <label class="acc-label pb-5">{{input type="checkbox" checked=selectedModel.deploy disabled=(if (eq modalOpts.type 'review') true false)}} Upgrade to the latest version</label>
+    <label class="acc-label pb-5">{{input type="checkbox" checked=selectedModel.deploy disabled=(if (eq modalOpts.type 'review') true false)}} {{t 'newPipelineStep.stepType.catalog.upgrade'}}</label>
   </div>
 </h2>
-<p class="text-muted mt-0 mb-0">This option will help you upgrade catalog stack to the latest version.</p>
+<p class="text-muted mt-0 mb-0">{{t 'newPipelineStep.stepType.catalog.upgradeTip'}}</p>
 {{#if selectedModel.deploy}}
   <div class="pt-10"></div>
   <div class="inline-form">
-    <label>Stack Name {{field-required}}</label>
+    <label>{{t 'newPipelineStep.stepType.catalog.stackName'}} {{field-required}}</label>
     <div class="pt-10"></div>
     {{input
       class="js-var-hint"

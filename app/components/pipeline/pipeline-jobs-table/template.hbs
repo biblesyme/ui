@@ -43,9 +43,9 @@
       <td class="text-muted" data-title="{{dt.isActivate}}">
         <span class="badge-state {{inst.statusClass}}">
           {{#if inst.isActivate}}
-            Active
+            {{t 'pipelinesPage.active'}}
           {{else}}
-            Inactive
+            {{t 'pipelinesPage.inactive'}}
           {{/if}}
         </span>
       </td>
@@ -54,8 +54,8 @@
       </td>
     </tr>
   {{else if (eq kind "nomatch")}}
-    <tr><td colspan="{{sortable.fullColspan}}" class="text-center text-muted lacsso pt-20 pb-20">There are no matched pipelines</td></tr>
+    <tr><td colspan="{{sortable.fullColspan}}" class="text-center text-muted lacsso pt-20 pb-20">{{t 'pipelinesPage.table.noMatch'}}</td></tr>
   {{else if (eq kind "norows")}}
-    <tr><td colspan="{{sortable.fullColspan}}" class="text-center text-muted lacsso pt-20 pb-20">There are no pipelines to show</td></tr>
+    <tr><td colspan="{{sortable.fullColspan}}" class="text-center text-muted lacsso pt-20 pb-20">{{t 'pipelinesPage.table.noData'}}</td></tr>
   {{/if}}
 {{/sortable-table}}

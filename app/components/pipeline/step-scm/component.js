@@ -109,7 +109,7 @@ export default Ember.Component.extend({
       this.set('selectedModel.sourceType',type);
     },
     reload: function(){
-      this.loadSetting(()=>{
+      this.loadSetting((res)=>{
         this.set('setting',res);
       });
     }

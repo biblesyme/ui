@@ -1,6 +1,6 @@
 <div class="pt-20"></div>
 <section class="box mb-20">
-  <h2>Select {{t 'catalogSettings.header'}}</h2>
+  <h2>{{t 'newPipelineStep.stepType.catalog.select'}} {{t 'catalogSettings.header'}}</h2>
   <p class="text-muted">{{t 'catalogSettings.subtext'}}</p>
   <hr>
   <div>
@@ -17,7 +17,7 @@
               </button>
             {{else}}
               <button class="btn bg-primary" {{action "editCatalog"}}>
-                Edit
+                {{t 'generic.edit'}}
               </button>
             {{/if}}
           </div>
@@ -89,7 +89,7 @@
           </table>
         {{/if}}
       {{else}}
-        <p>Please add Authentication</p>
+        <p>{{t 'newPipelineStep.stepType.catalog.authWarning'}}</p>
       {{/if}}
     {{/if}}
     
@@ -104,8 +104,8 @@
 <div class="pt-20"></div>
 
 <section class="box mb-20">
-  <h2>Select App</h2>
-  <p class="text-muted">select the app you want to upgrade</p>
+  <h2>{{t 'newPipelineStep.stepType.catalog.selectApp'}}</h2>
+  <p class="text-muted">{{t 'newPipelineStep.stepType.catalog.selectAppTip'}}</p>
   <hr>
   {{#power-select
     options=templates
