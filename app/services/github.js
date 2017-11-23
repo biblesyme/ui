@@ -37,8 +37,6 @@ export default Ember.Service.extend({
   stateMatches: function(actual) {
     var expected = this.get('session.githubState');
     // fix hash bug in github callback
-    alert(actual)
-    debugger
     actual = actual.split('#')[1];
     return actual && expected === actual;
   },
@@ -67,7 +65,6 @@ export default Ember.Service.extend({
     debugger
     var responded = false;
     window.onGithubTest = function(err,code) {
-      debugger
       if ( !responded ) {
         responded = true;
         cb(err,code);
@@ -76,7 +73,6 @@ export default Ember.Service.extend({
 
     var popup = window.open(this.getAuthorizeUrl(true), 'rancherAuth', Util.popupWindowOptions());
     var timer = setInterval(function() {
-      debugger
       if ( !popup || popup.closed ) {
         clearInterval(timer);
         if( !responded ) {

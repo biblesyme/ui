@@ -264,6 +264,7 @@ authPage:
         unrestricted: "{appName} is configured to allow access to any {github} user."
       disabled:
         label: GitHub is not configured
+        labelGitlab: GitLab is not configured
         warning: "{appName} can be configured to restrict access to a set of GitHub users and organization members.  This is not currently set up, so anybody that reach this page (or the API) has full control over the system."
 
     authenticated:
@@ -280,6 +281,7 @@ authPage:
         disable: Disable access control
     notAuthenticated:
       header: "1. Setup a GitHub Application"
+      headerVariable: "1. Setup a {GitHub} Application"
       ul:
         li1:
           text: 'For standard GitHub, <a href="https://github.com/settings/developers" target="_blank">click here</a> to go applications settings in a new window.'
@@ -287,13 +289,17 @@ authPage:
             li1: "For Github Enterprise, login to your account.  Click on Settings, then Applications."
         li2:
           text: 'Click "Register new application" and fill out the form:'
+          text2: 'Fill out the "Add new application" form:'
           ul:
             li1: '<b>Application name:</b> <span class="text-muted">Anything you like, e.g. My {appName}</span>'
+            li1_2: '<b>Name:</b> <span class="text-muted">Anything you like, e.g. My {appName}</span>'
             li2: Homepage URL
             li3: '<b>Application description:</b> <span class="text-muted">Anything you like, optional</span>'
             li4: Authorization callback URL
+            li4_2: Redirect URI
         li3:
           text: 'Click "Register Application" '
+          text2: 'Click "Save application" '
       form:
         header: '2. Configure {appName} to use your application for authentication'
         subtext: 'Copy and paste the Client ID and Secret from the upper-right corner of your newly-created application.'
@@ -305,14 +311,18 @@ authPage:
           labelText: Use a private GitHub Enterprise installation
         isGHEnterprise:
           labelText: Use a secure connection
+        glEnterprise:
+          labelText: Use a private GitLab Enterprise installation
         enterpriseHost:
           labelText: Enterprise Host
           placeholder: 'e.g. github.example.com'
+          placeholder2: 'e.g. gitlab.example.com'
     testAuth:
       header: '3. Test and enable authentication'
       subtext: 'Check that your application is configured correctly by testing authentication with it:'
       buttonText:
         pre: Authenticate with GitHub
+        preVariable: Authenticate with {GitHub}
         post: Waiting to hear back from GitHub
 
   azuread:

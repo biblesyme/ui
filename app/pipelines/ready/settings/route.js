@@ -17,11 +17,13 @@ export default Ember.Route.extend({
     // return model
     return Ember.RSVP.hash({
         model: model,
-        accounts: pipelineStore.findAll('gitaccount')
-      }).then(({model,accounts})=>{
+        accounts: pipelineStore.findAll('gitaccount'),
+        scmSettings: pipelineStore.findAll('scmSetting'),
+      }).then(({model,accounts,scmSettings})=>{
         return {
           settings: pipelineStore.createRecord(model.serialize()),
-          accounts: accounts
+          accounts,
+          scmSettings,
         }
       });
   }

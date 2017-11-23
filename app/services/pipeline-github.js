@@ -7,7 +7,7 @@ export default Ember.Service.extend({
   cookies  : Ember.inject.service(),
   session  : Ember.inject.service(),
   userStore: Ember.inject.service(),
-
+  redirect: null,
   // Set by app/services/access
   hostname : null,
   scheme   : null,
@@ -41,7 +41,7 @@ export default Ember.Service.extend({
 
   getAuthorizeUrl: function(githubAuthUrl,test) {
     var redirect = this.get('session').get(C.SESSION.BACK_TO) || window.location.href;
-
+    redirect = redirect.split('#')[0];
     if ( test )
     {
       redirect = Util.addQueryParam(redirect, 'isTest', 1);
@@ -50,7 +50,7 @@ export default Ember.Service.extend({
       state: this.generateState(),
       redirect_uri: redirect
     });
-
+    this.set('redirect', redirect);
     return url;
   },
 

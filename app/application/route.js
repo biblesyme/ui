@@ -13,6 +13,9 @@ var anlysisGithubCallbackHashBug = ()=>{
     if(str.indexOf('state')!==-1){
       params.state = splited[i+1].split('#')[0];
     }
+    if(str.indexOf('isTest')!==-1){
+      params.isTest = splited[i+1].split('&')[0];
+    }
   }
 
   return params;
@@ -199,7 +202,6 @@ export default Ember.Route.extend({
     if (params.isPopup) {
       this.controllerFor('application').set('isPopup', true);
     }
-
     if ( params.isTest ) {
       if ( true ) {
         reply(params.error_description, params.code);
@@ -212,7 +214,6 @@ export default Ember.Route.extend({
       return Ember.RSVP.reject('isTest');
 
     } else if ( params.code ) {
-
       if ( github.stateMatches(params.state) ) {
         return this.get('access').login(params.code).then(() => {
           // Abort the orignial transition that was coming in here since

@@ -23,6 +23,7 @@ export default Ember.Component.extend({
     disable: function(){
       this.get('model.settings').doAction('reset').then((res)=>{
         this.set('model.settings',res);
+        window.location.reload();
       })
     },
     promptDisable: function() {

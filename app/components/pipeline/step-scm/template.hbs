@@ -1,13 +1,18 @@
-<section class="header has-tabs clearfix">
+{{!-- <section class="header has-tabs clearfix">
   <ul class="tab-nav">
-    {{!-- <li {{action "changeSCMType" 'git'}}>
+    <li {{action "changeSCMType" 'git'}}>
       <a href="javascript:void(0);" class="{{if (eq selectedModel.sourceType 'git') 'active' (if (eq modalOpts.type 'review') 'hide')}} ember-view">Git</a>
-    </li> --}}
+    </li>
     <li {{action "changeSCMType" 'github'}}>
       <a href="javascript:void(0);" class="{{if (eq selectedModel.sourceType 'github') 'active' (if (eq modalOpts.type 'review') 'hide')}} ember-view">Github</a>
     </li>
+
+    <li {{action "changeSCMType" 'github'}}>
+      <a href="javascript:void(0);" class="{{if (eq selectedModel.sourceType 'github') 'active' (if (eq modalOpts.type 'review') 'hide')}} ember-view">Github</a>
+    </li>
+
   </ul>
-</section>
+</section> --}}
 {{#if (eq selectedModel.sourceType 'git')}}
   <div class="pt-20"></div>
   <div class="inline-form">
@@ -51,7 +56,16 @@
 
       <div class="pt-20"></div>
       <div class="inline-form">
-        <label>{{t 'pipelineActivities.repository'}}{{field-required}}</label>
+        <label>{{t 'pipelineActivities.repository'}}{{field-required}} {{#if repoRefresh}} <i class="icon icon-spin"></i> {{else}}
+          {{#tooltip-element 
+          type="tooltip-basic"
+          model='fetch from source code management'
+          tooltipTemplate='tooltip-static'
+          aria-describedby="tooltip-base"
+          tooltipFor="audit-log"}}
+          <button {{action "reloadRepo"}} class="btn bg-transparent"><i class="icon icon-refresh"></i></button>
+        {{/tooltip-element}}
+      {{/if}}  </label>
         <div class="pt-10"></div>
         {{#if (eq modalOpts.type 'review')}}
           {{input class="form-control" value=selectedModel.repository disabled=(if (eq modalOpts.type 'review') true false)}}

@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   selectedGitUser: null,
   statusFetching: true,
   repoFetching: false,
+  repoRefresh: false,
   setting: null,
   showBranch: function(){
     var modalOpts = this.get('modalOpts');
@@ -15,7 +16,7 @@ export default Ember.Component.extend({
     if(modalOpts.type === 'review'){
       return true;
     }
-    if(setting&&setting.isAuth){
+    if(setting&&setting.find(ele => ele.isAuth)){
       return true;
     }
     return false;
@@ -36,7 +37,7 @@ export default Ember.Component.extend({
       this.set('statusFetching',true);
       setTimeout(()=>{
         if(selectedModel.gitUser){
-          var selectedGitUser = accountsInfo.find(ele=>ele.login===selectedModel.gitUser);
+          var selectedGitUser = accountsInfo.find(ele=>ele.id===selectedModel.gitUser);
           selectedGitUser&&this.set('selectedGitUser',selectedGitUser);
         }
         this.loadSetting((res)=>{
@@ -51,11 +52,11 @@ export default Ember.Component.extend({
   selectedGitUserObserve: function(){
     var selectedGitUser = this.get('selectedGitUser');
     this.set('pipelineSvc.selectedGitUser',selectedGitUser);
-    this.set('selectedModel.gitUser', selectedGitUser.login);
+    this.set('selectedModel.gitUser', selectedGitUser.id);
     this.set('repoFetching',true);
     selectedGitUser.followLink('repos').then(res=>{
       this.set('statusFetching',false);
-      var repos = JSON.parse(res);
+      var repos = res;
       this.set('repos',repos);
       this.syncRepository();
     }).finally(()=>{
@@ -64,7 +65,7 @@ export default Ember.Component.extend({
   }.observes('selectedGitUser'),
   loadSetting(fn1,fn2){
     var pipelineStore = this.get('pipelineStore');
-    return pipelineStore.find('setting',null, {forceReload: true}).then((res)=>{
+    return pipelineStore.find('scmSetting',null, {forceReload: true}).then((res)=>{
       fn1&&fn1(res);
       if(res.isAuth){
         return null
@@ -105,6 +106,21 @@ export default Ember.Component.extend({
     this.syncRepository();
   }.observes('selectedModel.sourceType'),
   actions: {
+    reloadRepo: function(){
+      var selectedGitUser = this.get('selectedGitUser');
+      if(!selectedGitUser){
+        return
+      }
+      this.set('repoRefresh', true);
+      this.set('repoFetching',true);
+      selectedGitUser.doAction('refreshrepos').then((res)=>{
+        this.set('repos',res);
+        this.syncRepository();
+      }).finally(()=>{
+        this.set('repoRefresh', false);
+        this.set('repoFetching',false);
+      });
+    },
     changeSCMType: function(type){
       this.set('selectedModel.sourceType',type);
     },

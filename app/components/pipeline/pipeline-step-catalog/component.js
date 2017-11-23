@@ -23,7 +23,7 @@ export default Ember.Component.extend({
     if(modalOpts.type === 'review'){
       return true;
     }
-    if(setting&&setting.isAuth){
+    if(setting&&setting.find(ele => ele.isAuth)){
       return true;
     }
     return false;
@@ -162,7 +162,7 @@ export default Ember.Component.extend({
         if(!res){
           return
         }
-        var repos = JSON.parse(res)
+        var repos = res
         this.set('repos',repos.filter(repo=>repo.permissions.push));
         this.setProperties({
           ary: old.map((x) => {
@@ -220,7 +220,10 @@ export default Ember.Component.extend({
         isNew: true,
         // selected: null,
       });
-
+      let ary = this.get('ary');
+      if(!ary){
+        this.set('ary', []);
+      }
       this.get('ary').pushObject(obj);
 
       Ember.run.next(() => {

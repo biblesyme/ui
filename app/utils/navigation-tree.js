@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import C from 'ui/utils/constants';
 
 // Useful context/condition shortcuts
 export const getProjectId = function() { return this.get('projectId'); };
