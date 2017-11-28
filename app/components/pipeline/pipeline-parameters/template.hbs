@@ -1,37 +1,20 @@
-{{!-- {{#if preview}}
-  <div class="box">
-    {{form-key-value
-      initialMap=env
-      changed=(action (mut env))
-      allowEmptyValue=false
-      editing=false
-      normalHeader="Parameters"
-      addActionLabel="newContainer.environment.addAction"
-      keyLabel="newContainer.environment.keyLabel"
-      keyPlaceholder="newContainer.environment.keyPlaceholder"
-      valueLabel="newContainer.environment.valueLabel"
-      valuePlaceholder="newContainer.environment.valuePlaceholder"
-    }}
-  </div>
-{{else}} --}}
-  {{#accordion-list-item
-    title='Parameters'
-    detail='Set the pipeline environment variables'
-    statusClass='bg-success clip pull-right inline'
-    expandAll=preview
-    expand=(action expandFn)
+{{#accordion-list-item
+  title='Parameters'
+  detail='Set the pipeline environment variables'
+  statusClass='bg-success clip pull-right inline'
+  expandAll=preview
+  expand=(action expandFn)
+}}
+  {{form-key-value
+    initialMap=env
+    changed=(action (mut env))
+    allowEmptyValue=false
+    editing=(if preview false true)
+    normalHeader=""
+    addActionLabel="newContainer.environment.addAction"
+    keyLabel="newContainer.environment.keyLabel"
+    keyPlaceholder="newContainer.environment.keyPlaceholder"
+    valueLabel="newContainer.environment.valueLabel"
+    valuePlaceholder="newContainer.environment.valuePlaceholder"
   }}
-    {{form-key-value
-      initialMap=env
-      changed=(action (mut env))
-      allowEmptyValue=false
-      editing=(if preview false true)
-      normalHeader=""
-      addActionLabel="newContainer.environment.addAction"
-      keyLabel="newContainer.environment.keyLabel"
-      keyPlaceholder="newContainer.environment.keyPlaceholder"
-      valueLabel="newContainer.environment.valueLabel"
-      valuePlaceholder="newContainer.environment.valuePlaceholder"
-    }}
-  {{/accordion-list-item}}
-{{!-- {{/if}} --}}
+{{/accordion-list-item}}

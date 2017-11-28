@@ -630,6 +630,15 @@ newPipeline:
     custom: Custom
   save: Save
   add: Add
+  schedule:
+    title: Schedule
+    detail: Schedule to trigger pipeline
+    interval: Internal Pattern
+    custom: Custom
+    cronSyntax: Cron Syntax
+    everyDay: Every day(at 4:00am)
+    cronTimezone: Cron Timezone
+    tip: Run when there is new commit
 
 newPipelineStage:
   header:

@@ -1,7 +1,7 @@
 <section>
 {{#accordion-list-item
-  title='Schedule'
-  detail='Schedule to trigger pipeline'
+  title=(t "newPipeline.schedule.title")
+  detail=(t "newPipeline.schedule.detail")
   status=(pretty-cron pipeline.cronTrigger.spec 'toString')
   statusClass='bg-success clip pull-right inline'
   expandAll=null
@@ -9,13 +9,13 @@
 }}
   <div class="pt-20"></div>
   <div class="inline-form">
-    <label>Interval Pattern</label>
+    <label>{{t "newPipeline.schedule.interval"}}</label>
     <div class="pt-10"></div>
     <label class="mr-30">{{radio-button selection=schdulePattern value="custom"}}
-        Custom(<a href="https://en.wikipedia.org/wiki/Cron" target="blank">Cron syntax</a>)
+        {{t "newPipeline.schedule.custom"}}(<a href="https://en.wikipedia.org/wiki/Cron" target="blank">{{t "newPipeline.schedule.cronSyntax"}}</a>)
     </label>
     <label class="mr-30">{{radio-button selection=schdulePattern value="day"}}
-        Every day (at 4:00am)
+        {{t "newPipeline.schedule.everyDay"}}
     </label>
 
     <div class="pt-10"></div>
@@ -27,7 +27,7 @@
 
   <div class="pt-20"></div>
   <div class="inline-form">
-    <label>Cron Timezone</label>
+    <label>{{t "newPipeline.schedule.cronTimezone"}}</label>
     <div class="pt-10"></div>
     {{#power-select
       options=timezones
@@ -42,7 +42,7 @@
 
   <div class="pt-20"></div>
   <label>{{check-box class="form-control" checked=pipeline.cronTrigger.triggerOnUpdate}}
-    Run when there is new commit
+    {{t "newPipeline.schedule.tip"}}
   </label>
 {{/accordion-list-item}}
 
