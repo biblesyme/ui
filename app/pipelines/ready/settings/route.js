@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   pipeline: Ember.inject.service(),
   queryParams: {
-    status: {
+    forceLoad: {
       refreshModel: true
     },
   },

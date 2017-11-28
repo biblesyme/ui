@@ -126,7 +126,7 @@
         {{/if}}
       </div>
     {{else}}
-      <p>{{t 'newPipelineStep.stepType.scm.settingWarning1'}} {{#link-to "pipelines.ready.settings" forceLoad=true target="_blank"}}{{t 'newPipelineStep.stepType.scm.settingWarning2'}}{{/link-to}} {{t 'newPipelineStep.stepType.scm.settingWarning3'}}</p>
+      <p>{{t 'newPipelineStep.stepType.scm.settingWarning1'}} {{#link-to "pipelines.ready.settings" (query-params forceLoad=true)  target="_blank"}}{{t 'newPipelineStep.stepType.scm.settingWarning2'}}{{/link-to}} {{t 'newPipelineStep.stepType.scm.settingWarning3'}}</p>
       <p class="text-warning">{{t 'newPipelineStep.stepType.scm.note'}}: {{t 'newPipelineStep.stepType.scm.finishOauth1'}}<a href="javascript:void();" {{action "reload"}}>{{t 'newPipelineStep.stepType.scm.finishOauth2'}}</a> {{t 'newPipelineStep.stepType.scm.finishOauth3'}}</p>
     {{/if}}
   {{/if}}

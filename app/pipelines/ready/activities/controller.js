@@ -17,7 +17,6 @@ export default Ember.Controller.extend({
   }.property('model.@each.status', 'status'),
   filtered: function() {
     var status = this.get('status');
-    debugger
     let out = this.get('model')
       .filter(ele => {
         if (ele.status === 'Pending') {

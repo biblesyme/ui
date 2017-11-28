@@ -10,11 +10,11 @@ export default Ember.Component.extend({
   github: Ember.inject.service('pipeline-github'),
   selectedOauthType: 'github',
   oauthModel: {},
-  homePageURL: function(){
+  homePageURL: function() {
     var redirect = window.location.origin;
     return redirect;
   }.property(''),
-  destinationUrl: function(){
+  destinationUrl: function() {
     var redirect = this.get('session').get(C.SESSION.BACK_TO) || window.location.href;
     redirect = redirect.split('#')[0];
     return redirect;
@@ -31,7 +31,7 @@ export default Ember.Component.extend({
       scmSettings.addObject(gitlabOauthed);
     }
     if (!githubOauthed) {
-      githubOauthed = pipelineStore.createRecord({ type: 'scmSetting', scmType: 'github', id: 'github'});
+      githubOauthed = pipelineStore.createRecord({ type: 'scmSetting', scmType: 'github', id: 'github' });
       scmSettings.addObject(githubOauthed);
     }
     if (!githubOauthed && gitlabOauthed) {
@@ -46,8 +46,8 @@ export default Ember.Component.extend({
     var type = this.get('selectedOauthType');
     var pipelineStore = this.get('pipelineStore');
     var oauthModel = scmSettings.find(ele => ele.scmType === type);
-    if(!oauthModel || oauthModel.status === 'removed'){
-      oauthModel = pipelineStore.createRecord({ type: 'scmSetting', scmType: type , id: type});
+    if (!oauthModel || oauthModel.status === 'removed') {
+      oauthModel = pipelineStore.createRecord({ type: 'scmSetting', scmType: type, id: type });
     }
     this.set('oauthModel', oauthModel);
   }.observes('scmSettings.@each'),
@@ -101,9 +101,9 @@ export default Ember.Component.extend({
       this.set('selectedOauthType', type);
       var pipelineStore = this.get('pipelineStore');
       var oauthModel = this.get('scmSettings').filter(ele => ele.scmType === type);
-      oauthModel = oauthModel[oauthModel.length-1];
-      if(!oauthModel || oauthModel.status === 'removed'){
-        oauthModel = pipelineStore.createRecord({ type: 'scmSetting', scmType: type , id: type});
+      oauthModel = oauthModel[oauthModel.length - 1];
+      if (!oauthModel || oauthModel.status === 'removed') {
+        oauthModel = pipelineStore.createRecord({ type: 'scmSetting', scmType: type, id: type });
       }
       oauthModel && this.set('oauthModel', oauthModel);
     },
@@ -122,7 +122,7 @@ export default Ember.Component.extend({
       var scmType = model.scmType;
       var pipelineStore = this.get('pipelineStore');
       model.doAction('remove').then((res) => {
-        pipelineStore.findAll('scmSetting').then((res)=>{
+        pipelineStore.findAll('scmSetting').then((res) => {
           this.set('scmSetting', res);
         })
         // this.set('oauthModel', pipelineStore.createRecord({ type: 'scmSetting', scmType: scmType}));
@@ -136,11 +136,35 @@ export default Ember.Component.extend({
     },
     authenticate: function() {
       var clientId = this.get('oauthModel.clientID');
+      var hostname = this.get('oauthModel.hostName');
+      var scheme = this.get('oauthModel.scheme');
+      var oauthHostName = 'gitlab.com';
+      if(!scheme){
+        scheme = 'https://';
+      }
+      if(this.get('isEnterprise')){
+        if(!this.get('oauthModel.hostName')){
+          this.send('showError', "'Enterprise Host' is required!");
+          return
+        }
+      }
       this.send('clearError');
       this.set('testing', true);
-      var authorizeURL = 'https://gitlab.com/oauth/authorize?client_id=' + clientId + '&response_type=code';
+
+      if (this.get('isEnterprise')) {
+        if (hostname) {
+          oauthHostName = hostname;
+        }
+      }
+      var authorizeURL = scheme + oauthHostName + '/oauth/authorize?client_id=' + clientId + '&response_type=code';
       if (this.get('selectedOauthType') === 'github') {
-        authorizeURL = 'https://github.com/login/oauth/authorize?client_id=' + clientId + '&response_type=code&scope=repo+admin%3Arepo_hook';
+        oauthHostName = 'github.com';
+        if (this.get('isEnterprise')) {
+          if (hostname) {
+            oauthHostName = hostname;
+          }
+        }
+        authorizeURL = scheme + oauthHostName + '/login/oauth/authorize?client_id=' + clientId + '&response_type=code&scope=repo+admin%3Arepo_hook';
       }
       this.get('github').authorizeTest(
         authorizeURL,
@@ -175,9 +199,9 @@ export default Ember.Component.extend({
     authenticationSucceeded: function(res) {
       var pipelineStore = this.get('pipelineStore');
       this.set('oauthModel', res);
-      pipelineStore.findAll('scmSetting').then((res)=>{
-          this.set('scmSetting', res);
-        })
+      pipelineStore.findAll('scmSetting').then((res) => {
+        this.set('scmSetting', res);
+      })
     },
     gotError: function(err) {
       if (err.message) {
