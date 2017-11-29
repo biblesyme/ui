@@ -12,7 +12,9 @@ export default Ember.Component.extend({
   showBranch: function(){
     var modalOpts = this.get('modalOpts');
     var setting = this.get('setting');
-
+    Ember.run.scheduleOnce('afterRender', this, function() {
+                this.$('.js-auto-focus').focus();
+            });
     if(modalOpts.type === 'review'){
       return true;
     }
@@ -36,6 +38,9 @@ export default Ember.Component.extend({
     if(modalOpts.type !== 'review'){
       this.set('statusFetching',true);
       setTimeout(()=>{
+        if(modalOpts.type === 'add' && accountsInfo.content.length){
+          this.set('selectedGitUser', accountsInfo.find(()=>true));
+        }
         if(selectedModel.gitUser){
           var selectedGitUser = accountsInfo.find(ele=>ele.id===selectedModel.gitUser);
           selectedGitUser&&this.set('selectedGitUser',selectedGitUser);
@@ -76,7 +81,12 @@ export default Ember.Component.extend({
   },
   syncRepository(){
     var selectedModel = this.get('selectedModel');
-    var repos = this.get('repos',repos);
+    var repos = this.get('repos');
+    var modalOpts = this.get('modalOpts');
+    debugger
+    if(modalOpts.type === 'add' && repos.content.length){
+          this.set('selected', repos.find(()=>true));
+        }
     if(selectedModel.repository){
       var selected = repos.find((ele)=>{
         if(ele.clone_url === selectedModel.repository){
@@ -87,8 +97,7 @@ export default Ember.Component.extend({
       selected&&this.set('selected', selected)||this.set('selected',null)
     }
   },
-  selectedObserves: function(){
-    var selected = this.get('selected');
+  selectedObserves: function(selected){
 
     if(!selected){
       this.set('selectedModel.repository', '');
@@ -101,10 +110,14 @@ export default Ember.Component.extend({
     }else{
       this.set('selectedModel.webhook', true);
     }
-  }.observes('selected','selectedModel.sourceType'),
+  },
   sourceTypeObserves: function(){
     this.syncRepository();
   }.observes('selectedModel.sourceType'),
+  selectRepo: function(repo){
+    this.set('selected', repo);
+    this.selectedObserves(repo);
+  },
   actions: {
     reloadRepo: function(){
       var selectedGitUser = this.get('selectedGitUser');

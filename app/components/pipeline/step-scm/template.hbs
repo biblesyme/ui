@@ -48,7 +48,10 @@
             onchange=(action (mut selectedGitUser))
             as |account|
           }}
-            {{#identity-block identity=account}}
+            {{#identity-block 
+              identity=account
+              link=false
+            }}
             {{/identity-block}}
           {{/power-select}}
         {{/if}}
@@ -77,7 +80,7 @@
               options=repos
               searchField="clone_url"
               selected=selected
-              onchange=(action (mut selected))
+              onchange=(action selectRepo)
               as |repo|
             }}
               {{repo.clone_url}}
@@ -89,7 +92,7 @@
       <div class="inline-form">
         <label>{{t 'newPipelineStep.stepType.scm.branch'}}{{field-required}}</label>
         <div class="pt-10"></div>
-        {{input class="form-control js-disable-hint" value=selectedModel.branch placeholder="master" disabled=(if (eq modalOpts.type 'review') true false)}}
+        {{input class="form-control js-disable-hint js-auto-focus" value=selectedModel.branch placeholder="master" disabled=(if (eq modalOpts.type 'review') true false)}}
       </div>
       <div class="pt-20"></div>
       <div class="inline-form">
@@ -99,7 +102,7 @@
             {{#if selected.permissions.admin}}
               {{check-box class="form-control" checked=selectedModel.webhook disabled=(if (eq modalOpts.type 'review') true false) }}
             {{else}}
-              <i class="icon icon-close text-warning"></i>
+              {{check-box class="form-control" checked=false disabled=true }}
             {{/if}}
           {{else}}
               {{check-box class="form-control" checked=selectedModel.webhook disabled=(if (eq modalOpts.type 'review') true false) }}
@@ -119,7 +122,7 @@
             <div class="banner bg-warning">
               <div class="banner-icon"><span class="icon icon-alert"></span></div>
               <div class="banner-message">
-                <p>{{t 'newPipelineStep.stepType.scm.nopermission'}}</p>
+                <p>{{t 'newPipelineStep.stepType.scm.noPermission'}}</p>
               </div>
             </div>
           {{/if}}

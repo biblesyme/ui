@@ -123,10 +123,10 @@ var validationErrors = (module) => {
   switch (module.type) {
     case 'scm':
       if (module.repository.indexOf('.git') === -1) {
-        errors.push('Repository should be a valid git address!');
+        errors.push('"Repository" is required');
       }
       if (!module.branch) {
-        errors.push('"Branch" is required!')
+        errors.push('"Branch" is required')
       }
       Ember.set(module, 'repository', module.repository.trim());
       break;

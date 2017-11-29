@@ -20,11 +20,11 @@ export default Ember.Route.extend(WS, PolledModel, {
       };
     })
   },
-  beforeModel: function() {
+  beforeModel: function(model) {
     this.set('pipelineStore.baseUrl', this.get('pipeline.pipelinesEndpoint'));
   },
   afterModel: function(model) {
-    if (model && model.ready.ready) {
+    if (model && model.ready && model.ready.ready) {
       var router = this.get('router');
       var targetName = router.router.activeTransition.targetName
       if(targetName==='pipelines.index'){

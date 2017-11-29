@@ -70,7 +70,7 @@ export default Ember.Component.extend(ManageLabels, {
     this.set('model.conditions', {
       [mode]: labelArray.filter(ele => ele.env).map(ele => expressionsObjToStr(ele))
     })
-  }.observes('labelArray.@each.env', 'conditions.mode', 'labelArray.@each.value'),
+  }.observes('labelArray.@each.env', 'conditions.mode', 'labelArray.@each.value', 'labelArray.@each.opt'),
   didReceiveAttrs() {
     if (!this.get('expandFn')) {
       this.set('expandFn', function(item) {

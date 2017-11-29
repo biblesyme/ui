@@ -86,7 +86,7 @@ Router.map(function() {
         this.route('import', {path: '/import'});
         this.route('view-config', {path: '/viewConfig/:pipeline_id'});
         this.route('ready', {path: '/r'},function(){
-          this.route('activities',{path:'/'});
+          this.route('activities',{path:'/activities'});
           this.route('pipelines',{path:'/pipelines'});
           this.route('settings',{path:'/settings'});
         });

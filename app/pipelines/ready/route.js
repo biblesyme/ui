@@ -14,8 +14,12 @@ export default Ember.Route.extend({
   },
   afterModel: function(model, transition) {
     var params = transition.queryParams;
+    debugger
     if(params.forceLoad === 'true'){
       return
+    }
+    if(transition.intent.name === 'pipelines.ready' || transition.targetName === 'pipelines.ready.index'){
+      this.get('router').transitionTo('pipelines.ready.activities');
     }
     // skip to pipelines page when there is no pipeline
     if (!model.content.length) {

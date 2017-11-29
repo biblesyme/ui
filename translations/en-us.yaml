@@ -656,11 +656,11 @@ newPipelineStep:
     image: Image
     scm:
       label: Source Code Management
-      warning: To create your pipeline, please specify the source code repo
+      warning: To create your pipeline, please specify the source code repository
       user: User
       branch: Branch
       webhook: Webhook
-      webhookTip: Automatically trigger the pipeline when push to the repo.
+      webhookTip: Automatically run pipeline after commits
       noPermission: no permissions
       settingWarning1: Please finish the OAuth of GitHub in
       settingWarning2: click here

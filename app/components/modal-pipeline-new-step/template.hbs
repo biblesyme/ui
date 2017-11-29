@@ -1,22 +1,25 @@
 <section class="header clearfix">
-  <div class="modal-pipeline-head">
-    {{#if (eq modalOpts.type 'review')}}
-      <h2>{{modalOpts.stageIndex}}. {{modalOpts.stageInfo}}</h2>
-    {{else}}
-      <h2>{{t (if editing 'newPipelineStep.header.edit' 'newPipelineStep.header.create')}}</h2>
-      <br>
-      <p class="text-muted">{{modalOpts.stageIndex}}. {{modalOpts.stageInfo}}</p>
-    {{/if}}
-  </div>
-  {{#if editing}}
-    {{#if (not-eq type 'scm')}}
-    <div class="right-buttons">
-      <button class="btn bg-error" {{action 'remove'}}>
-        {{t 'generic.remove'}}
-      </button>
+  {{#if (eq type 'scm')}}
+    <h2>Add Repository</h2>
+  {{else}}
+    <div class="modal-pipeline-head">
+      {{#if (eq modalOpts.type 'review')}}
+        <h2>{{modalOpts.stageIndex}}. {{modalOpts.stageInfo}}</h2>
+      {{else}}
+        <h2>{{t (if editing 'newPipelineStep.header.edit' 'newPipelineStep.header.create')}}</h2>
+        <br>
+        <p class="text-muted">{{modalOpts.stageIndex}}. {{modalOpts.stageInfo}}</p>
+      {{/if}}
     </div>
+    {{#if editing}}
+      <div class="right-buttons">
+        <button class="btn bg-error" {{action 'remove'}}>
+          {{t 'generic.remove'}}
+        </button>
+      </div>
     {{/if}}
   {{/if}}
+  
 </section>
 {{pipeline/pipeline-step-form
   pipeline=modalOpts.pipeline
