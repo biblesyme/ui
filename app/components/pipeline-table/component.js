@@ -2,6 +2,13 @@ import Ember from 'ember';
 
 export const headersAll =  [
   {
+    name: 'status',
+    sort: ['status'],
+    width: 200,
+    searchField: 'status',
+    translationKey: 'generic.state',
+  },
+  {
     name: 'name',
     sort: ['name'],
     searchField: 'pipelineSource.name',
@@ -22,13 +29,7 @@ export const headersAll =  [
     translationKey: 'generic.time',
     label: 'Time'
   },
-  {
-    name: 'status',
-    sort: ['status'],
-    width: 200,
-    searchField: 'status',
-    translationKey: 'generic.state',
-  },
+  
 ];
 
 export default Ember.Component.extend({

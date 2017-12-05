@@ -14,10 +14,15 @@ export default Ember.Route.extend({
     }
     var pipelineStore = this.get('pipelineStore');
     var pipeline = pipelineStore.find('pipeline',params.pipeline_id);
+    var pipelineHistory = null;
+    if(params.mode === 'review'){
+      pipelineHistory = pipelineStore.find('activity');
+    }
     return Ember.RSVP.hash({
         pipeline: pipeline
         ,accounts: pipelineStore.find('gitaccount')
-      }).then(({pipeline,accounts})=>{
+        ,pipelineHistory
+      }).then(({pipeline,accounts,pipelineHistory})=>{
         var piplineObj;
         if(params.mode === 'duplicate'){
           piplineObj = pipelineStore.createRecord({
@@ -32,7 +37,8 @@ export default Ember.Route.extend({
         }
         return {
           pipeline: piplineObj,
-          accounts
+          accounts,
+          pipelineHistory
         }
       });
   }

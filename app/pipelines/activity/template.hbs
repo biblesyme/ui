@@ -22,7 +22,11 @@
 </section>
 
 <section class="pipeline-container">
-  {{pipeline-stages pipeline=model.activity.pipelineSource stagesDraggable=false review=true model=model.activity.pipelineSource.stages}}
+  {{pipeline-stages 
+    pipeline=model.activity.pipelineSource
+    stagesDraggable=false 
+    review=true 
+    model=model.activity.pipelineSource.stages}}
 </section>
 
 <div class="mt-10"></div>
@@ -41,49 +45,8 @@
 </section>
 
 <section>
-  {{#if filterdPiplineHistory.length}}
-    {{!-- {{#accordion-list as |al expandFn| }} --}}
-      {{#each filterdPiplineHistory as |activity|}}
-        {{#accordion-list-item
-          title=model.activity.repository
-          detail=(concat-str model.activity.branch ' ' (sub-str model.activity.commitInfo 0 8) ' ' (date-str model.activity.start_ts) )
-          status=model.activity.status
-          statusClass=model.activity.status
-          expandAll=true
-          expand=(action expandFn)
-          componentName='activity-table'
-          className=(concat-str "header-pipeline" model.activities.status)
-          as | parent |
-        }}
-        <div class="row">
-          <div class="col span-4" style="display:inline-block;vertical-align: top;">
-            {{pipeline-history-table
-              stageInfo=model.activity.pipelineSource.stages
-              body=activity.activity_stages
-              stageIndexLog=model.stageIndex
-              stepIndexLog=model.stepIndex
-              showLogsActivity=(action "showLogsActivity")
-              activity=model.activity
-              sortBy=sortBy
-              bulkActions=true
-              search=true
-              paging=true
-              showHost=true
-              showInstanceState=false
-              groupByKey=groupBy
-              groupByRef="stack"
-            }}
-          </div>
-          <div class="col span-8 pull-right" style="display:inline-block;">
-            {{pipeline/pipeline-logs
-              instance=originalModel
-              }}
-          </div>
-        </div>
-        {{/accordion-list-item}}
-      {{/each}}
-    {{!-- {{/accordion-list}} --}}
-  {{else}}
-    <p class="text-center text-muted">No {{if isHistory 'History' 'Activity'}}</p>
-  {{/if}}
+  {{pipeline/table-activity
+    filteredPiplineHistory=filteredPiplineHistory
+    expendAll=true
+  }}
 </section>

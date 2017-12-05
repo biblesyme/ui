@@ -3,6 +3,7 @@ import { timezones } from 'ui/utils/timezones';
 export default Ember.Component.extend({
   timezones: timezones,
   selected: '',
+  edit: true,
   init() {
     this._super();
     var triggerTimezone = this.get('pipeline.cronTrigger.timezone');
@@ -25,6 +26,9 @@ export default Ember.Component.extend({
     }
     if (this.get('initial')) {
       this.set('pipeline.isActivate', true);
+    }
+    if(!this.get('edit')){
+      this.set('schduleInputDisabled', true);
     }
   },
   selectedObeserves: function() {

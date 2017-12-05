@@ -19,23 +19,26 @@ export default Ember.Controller.extend({
   }.observes('model.activity.status'), 
   init() {
     this._super();
+    Ember.run.later(() => {
+      this.set('model.activity.expanded', true);
+    });
   },
-  runningObserves: function(){
-    var stages = this.get('model.activity.activity_stages');
-    var runningStage = stages.findIndex(ele=>ele.status==='Building');
-    if(runningStage === -1){
-      return
-    }
-    var runningStep = stages[runningStage].activity_steps.findIndex(ele=>ele.status==='Building');
-    if(runningStep === -1) {
-      return
-    }
-    this.set('model.stageIndex',runningStage);
-    this.set('model.stepIndex',runningStep);
-  }.observes('model.activity.activity_stages.@each'),
-  filterdPiplineHistory: function() {
-    return [{ activity_stages: this.get('model.activity').activity_stages }];
-  }.property('model.activity.activity_stages'),
+  // runningObserves: function(){
+  //   var stages = this.get('model.activity.activity_stages');
+  //   var runningStage = stages.findIndex(ele=>ele.status==='Building');
+  //   if(runningStage === -1){
+  //     return
+  //   }
+  //   var runningStep = stages[runningStage].activity_steps.findIndex(ele=>ele.status==='Building');
+  //   if(runningStep === -1) {
+  //     return
+  //   }
+  //   this.set('model.stageIndex',runningStage);
+  //   this.set('model.stepIndex',runningStep);
+  // }.observes('model.activity.activity_stages.@each'),
+  filteredPiplineHistory: function() {
+    return [ this.get('model').activity ];
+  }.property('model.activity.activity_stages.@each'),
   isHistory: function() {
     return this.get('activeTab') === 'history'
   }.property('activeTab'),
@@ -68,7 +71,6 @@ export default Ember.Controller.extend({
       this.get('model.activity')
         .doAction('stop')
           .finally(()=>{
-            debugger
             this.set('disableStop', false);
           })
     },

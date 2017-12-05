@@ -141,7 +141,6 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
       this.send('cancel');
     },
     edit: function(success) {
-      debugger
       var added = this.get('modalOpts').cb({
         ...this.get('model'),
         id: Date.now(),

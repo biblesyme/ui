@@ -83,7 +83,6 @@ export default Ember.Component.extend({
     var selectedModel = this.get('selectedModel');
     var repos = this.get('repos');
     var modalOpts = this.get('modalOpts');
-    debugger
     if(modalOpts.type === 'add' && repos.content.length){
           this.set('selected', repos.find(()=>true));
         }

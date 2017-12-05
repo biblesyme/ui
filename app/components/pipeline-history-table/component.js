@@ -31,7 +31,7 @@ export default Ember.Component.extend({
   },
   actions: {
     showLogs: function(stageIndex,stepIndex){
-      this.sendAction('showLogsActivity',stageIndex,stepIndex)
+      this.sendAction('showLogsActivity',this.get('activity'), stageIndex,stepIndex)
     },
     sendAction: function (model, action) {
       return model.send(action)

@@ -1,21 +1,14 @@
-<section class="header has-tabs clearfix">
-  <ul class="tab-nav">
-    <li>{{#link-to "pipelines.ready.pipelines" (query-params status="all")}}{{t 'pipelineActivities.all'}}{{/link-to}}</li>
-    <li>{{#link-to "pipelines.ready.pipelines" (query-params status="active")}}{{t 'pipelinesPage.active'}}{{/link-to}}</li>
-    <li>{{#link-to "pipelines.ready.pipelines" (query-params status="inactive")}}{{t 'pipelinesPage.inactive'}}{{/link-to}}</li>
-  </ul>
-  <div class="right-buttons">
-    {{#link-to "pipelines.import" classNames="btn btn-sm bg-default mr-10"}}{{t 'pipelinesPage.import'}}{{/link-to}}
-    <button class="btn bg-link btn-sm icon-btn p-0">
-      {{#link-to "pipelines.new-pipeline" class="btn bg-link icon-btn p-0"}}
-        <span class="darken"><i class="icon icon-plus text-small"/></span>
-        <span>{{t 'pipelinesPage.add'}}</span>
-      {{/link-to}}
-    </button>
-  </div>
-</section>
+<div class="text-right">
+  {{#link-to "pipelines.import" classNames="btn btn-sm bg-default mr-10"}}{{t 'pipelinesPage.import'}}{{/link-to}}
+  <button class="btn bg-link btn-sm icon-btn p-0">
+    {{#link-to "pipelines.new-pipeline" class="btn bg-link icon-btn p-0"}}
+      <span class="darken"><i class="icon icon-plus text-small"/></span>
+      <span>{{t 'pipelinesPage.add'}}</span>
+    {{/link-to}}
+  </button>
+</div>
 
-
+<div class="mt-10"></div>
 <section class="instances">
   {{pipeline/pipeline-jobs-table
       body=filtered

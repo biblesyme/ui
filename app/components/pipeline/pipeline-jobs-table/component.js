@@ -2,6 +2,12 @@ import Ember from 'ember';
 
 export const headersAll =  [
   {
+    name: 'isActivate',
+    sort: ['isActivate'],
+    searchField: 'isActivate',
+    translationKey: 'generic.state',
+  },
+  {
     name: 'name',
     sort: ['name'],
     searchField: 'name',
@@ -27,12 +33,7 @@ export const headersAll =  [
     searchField: 'nextRunTime',
     translationKey: 'pipelinesPage.nextRun',
   },
-  {
-    name: 'isActivate',
-    sort: ['isActivate'],
-    searchField: 'isActivate',
-    translationKey: 'generic.state',
-  }
+  
 ];
 
 export default Ember.Component.extend({

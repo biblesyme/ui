@@ -589,7 +589,7 @@ pipelinesPage:
 
 
 pipelineActivities:
-  activities: Activities
+  history: History
   all: All
   running: Running
   success: Success

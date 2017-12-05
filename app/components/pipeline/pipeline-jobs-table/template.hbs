@@ -1,6 +1,6 @@
 {{#sortable-table
   tableClassNames="double-rows"
-  bulkActions=false
+  bulkActions=bulkActions
   body=body
   sortBy=sortBy
   stickyHeader=stickyHeader
@@ -12,8 +12,24 @@
   }}
   {{#if (eq kind "row")}}
     <tr class="main-row">
+      {{#if bulkActions}}
+        <td valign="middle" class="row-check" style="padding-top: 2px;">
+          {{check-box nodeId=inst.id}}
+        </td>
+      {{/if}}
+      <td class="text-muted" data-title="{{dt.isActivate}}">
+      <span class="badge-state {{inst.statusClass}}">
+          {{#if inst.isActivate}}
+            {{t 'pipelinesPage.active'}}
+          {{else}}
+            {{t 'pipelinesPage.inactive'}}
+          {{/if}}
+        </span>
+      </td>
       <td data-title="{{dt.name}}" class="clip">
-        <a href="{{href-to "pipelines.pipeline" inst.id}}">{{inst.name}}</a>
+        {{#link-to "pipelines.pipeline" inst.id (query-params mode="review")}}
+          {{inst.name}}
+        {{/link-to}}
       </td>
       <td data-title="{{dt.repository}}" class="clip text-muted">
         <p class="mt-10 mb-5">{{inst.repository}}</p>
@@ -40,15 +56,7 @@
           N/A
       {{/if}}
       </td>
-      <td class="text-muted" data-title="{{dt.isActivate}}">
-        <span class="badge-state {{inst.statusClass}}">
-          {{#if inst.isActivate}}
-            {{t 'pipelinesPage.active'}}
-          {{else}}
-            {{t 'pipelinesPage.inactive'}}
-          {{/if}}
-        </span>
-      </td>
+      
       <td data-title="{{dt.actions}}" class="actions">
         {{action-menu model=inst showPrimary=true}}
       </td>

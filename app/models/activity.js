@@ -24,6 +24,31 @@ export default Resource.extend({
   type: 'activity',
   router: Ember.inject.service(),
   userStore: Ember.inject.service('user-store'),
+  runningObserves: function(){
+    var stages = this.get('activity_stages');
+    var runningStage = stages.findIndex(ele=>ele.status==='Building');
+    if(runningStage === -1){
+      return
+    }
+    var runningStep = stages[runningStage].activity_steps.findIndex(ele=>ele.status==='Building');
+    if(runningStep === -1) {
+      return
+    }
+    Ember.run.later(()=>{
+      this.set('stageIndex',runningStage);
+      this.set('stepIndex',runningStep);
+    });
+  }.observes('activity_stages.@each'),
+  stageIndex: 0,
+  stepIndex: 0,
+  activityLogs: {},
+  logModel: function(){
+    return {
+      activity: this,
+      step: [this.get('stageIndex'),this.get('stepIndex')],
+      activityLogs: this.get('activityLogs'),
+    }
+  }.property('stageIndex','stepIndex'),
   actions: {
     rerun: function() {
       return this.doAction('rerun')
@@ -42,7 +67,10 @@ export default Resource.extend({
     },
     stop: function() {
       return this.doAction('stop');
-    }
+    },
+    remove:function(){
+      this.get('modalService').toggleModal('confirm-delete', {resources: [this]});
+    },
   },
   amount: function(){
     var activity_stages = this.get('activity_stages');
@@ -65,11 +93,13 @@ export default Resource.extend({
     var a = this.get('actionLinks');
     var status = this.get('status');
     return [
-      { label: 'action.rerun', icon: 'icon icon-refresh', action: 'rerun', enabled: a.rerun ? true : false },
-      { label: 'action.stop', icon: 'icon icon-stop', action: 'stop', enabled: a.stop ? true : false },
+      { label: 'action.rerun', icon: 'icon icon-refresh', action: 'rerun', enabled: a.rerun ? true : false ,bulkable: a.rerun ? true : false},
+      { label: 'action.stop', icon: 'icon icon-stop', action: 'stop', enabled: a.stop ? true : false ,bulkable: a.stop ? true : false},
       { divider: true },
-      { label: 'action.approve', icon: 'icon icon-success', action: 'approve', enabled: status === 'Pending' && a.approve ? true : false },
-      { label: 'action.deny', icon: 'icon-x-circle', action: 'deny', enabled: status === 'Pending' && a.deny ? true : false },
+      { label: 'action.approve', icon: 'icon icon-success', action: 'approve', enabled: status === 'Pending' && a.approve ? true : false ,bulkable: status === 'Pending' && a.approve ? true : false},
+      { label: 'action.deny', icon: 'icon-x-circle', action: 'deny', enabled: status === 'Pending' && a.deny ? true : false ,bulkable: status === 'Pending' && a.deny ? true : false},
+      { divider: true },
+      { label: 'action.remove', icon: 'icon icon-trash', action: 'remove', enabled: true, bulkable: true },
     ];
   }.property('actionLinks.@each'),
   commit: function() {
@@ -116,5 +146,8 @@ export default Resource.extend({
   statusLabel: function () {
     var status = this.get('status');
     return STATUS_LABEL_ENUMS[status];
-  }.property('status')
+  }.property('status'),
+  name: function(){
+    return '#'+ this.get('runSequence') + ' by ' + this.get('pipelineSource.name');
+  }.property('runSequence', 'pipelineSource.name')
 });

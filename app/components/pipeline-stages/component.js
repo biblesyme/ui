@@ -44,7 +44,9 @@ export default Ember.Component.extend({
     var systemVars = this.get('systemVars');
     this.set('envvars',env.concat(systemVars));
   }.observes('env'),
-  review: false,
+  review: function(){
+    return !this.get('editable');
+  }.property('editable'),
   init() {
     this._super(...arguments);
     var pipelineStore = this.get('pipelineStore');
@@ -102,7 +104,7 @@ export default Ember.Component.extend({
       })
     },
     editStage: function(index) {
-      var review = this.get('review');
+      var review = !this.get('editable');
       this.get('modalService').toggleModal('modal-pipeline-new-stage', {
         stage: this.get('pipeline.stages')[index],
         pipeline: this.get('pipeline'),

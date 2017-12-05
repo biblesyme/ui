@@ -4,7 +4,7 @@ import { download } from 'ui/utils/util';
 
 const ENUMS_STATUSCLASS = {
   'true': 'bg-success',
-  'false': 'bg-info',
+  'false': 'bg-warning',
 };
 
 export default Resource.extend({
@@ -61,18 +61,18 @@ export default Resource.extend({
     var isActivate = this.get('isActivate')
     let l = this.get('links');
     return [
-      { label: 'action.run', icon: 'icon icon-play', action: 'run', enabled: true },
+      { label: 'action.run', icon: 'icon icon-play', action: 'run', enabled: true, bulkable: true },
       { divider: true },
-      { label: 'action.edit', icon: 'icon icon-edit', action: 'edit', enabled: true },
-      { label: 'action.clone', icon: 'icon icon-copy', action: 'duplicate', enabled: true },
+      { label: 'action.edit', icon: 'icon icon-edit', action: 'edit', enabled: true, bulkable: true },
+      { label: 'action.clone', icon: 'icon icon-copy', action: 'duplicate', enabled: true, bulkable: true },
       { divider: true },
-      { label:   'action.viewConfig',     icon: 'icon icon-files',          action: 'viewCode',         enabled: !!l.exportConfig },
-      { label:   'action.exportConfig',   icon: 'icon icon-download',       action: 'exportConfig',     enabled: !!l.exportConfig },
+      { label:   'action.viewConfig',     icon: 'icon icon-files',          action: 'viewCode',         enabled: !!l.exportConfig, bulkable: !!l.exportConfig },
+      { label:   'action.exportConfig',   icon: 'icon icon-download',       action: 'exportConfig',     enabled: !!l.exportConfig, bulkable: !!l.exportConfig },
       { divider: true },
-      { label: 'action.activate', icon: 'icon icon-copy', action: 'activate', enabled: isActivate ? false : true },
-      { label: 'action.deactivate', icon: 'icon icon-copy', action: 'deactivate', enabled: isActivate ? true : false },
+      { label: 'action.activate', icon: 'icon icon-copy', action: 'activate', enabled: !isActivate, bulkable: !isActivate},
+      { label: 'action.deactivate', icon: 'icon icon-copy', action: 'deactivate', enabled: isActivate, bulkable: isActivate},
       { divider: true },
-      { label: 'action.remove', icon: 'icon icon-trash', action: 'remove', enabled: true },
+      { label: 'action.remove', icon: 'icon icon-trash', action: 'remove', enabled: true, bulkable: true },
     ];
   }.property('actions.{run,remove}', 'isActivate'),
   validationErrors() {
@@ -120,8 +120,8 @@ export default Resource.extend({
     return this.get('stages')[0].steps[0].branch
   }.property('stages'),
   statusClass: function() {
-    var status = this.get('isActive')+'';
+    var status = !!this.get('isActivate')+'';
     return ENUMS_STATUSCLASS[status];
-  }.property('isActive'),
+  }.property('isActivate'),
 
 });

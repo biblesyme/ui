@@ -7,21 +7,6 @@
   {{/each}}
 </section>
 
-<section class="header has-tabs clearfix">
-  <ul class="tab-nav">
-    <li>{{#link-to "pipelines.ready.activities" (query-params status="all")}}{{t 'pipelineActivities.all'}}{{/link-to}}</li>
-    <li>{{#link-to "pipelines.ready.activities" (query-params status="running") replace=true}}{{t 'pipelineActivities.running'}}{{/link-to}}</li>
-    <li>{{#link-to "pipelines.ready.activities" (query-params status="Success") replace=true}}{{t 'pipelineActivities.success'}}{{/link-to}}</li>
-    <li>{{#link-to "pipelines.ready.activities" (query-params status="Fail") replace=true}}{{t 'pipelineActivities.fail'}}{{/link-to}}</li>
-  </ul>
-  <div class="right-buttons">
-    <button class="btn bg-link btn-sm icon-btn p-0" {{action "runPipelines"}}>
-      <span class="darken"><i class="icon icon-play text-small"/></span>
-      <span>{{t 'pipelineActivities.runPipeline'}}</span>
-    </button>
-  </div>
-</section>
-
 <section class="instances">
   {{pipeline-table
       body=filtered

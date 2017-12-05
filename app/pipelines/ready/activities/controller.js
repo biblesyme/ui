@@ -1,7 +1,6 @@
 import Ember from 'ember';
 export default Ember.Controller.extend({
-  queryParams: ['status', 'sortBy', 'descending'],
-  status: 'all',
+  queryParams: ['sortBy', 'descending'],
   sortBy: 'start_ts',
   descending: true,
   modalService: Ember.inject.service('modal'),
@@ -17,27 +16,7 @@ export default Ember.Controller.extend({
   }.property('model.@each.status', 'status'),
   filtered: function() {
     var status = this.get('status');
-    let out = this.get('model')
-      .filter(ele => {
-        if (ele.status === 'Pending') {
-          return false
-        }
-        if (status === 'all') {
-          return true
-        }
-        if (status === "running" &&
-          ele.status !== 'Success' &&
-          ele.status !== 'Fail' &&
-          ele.status !== 'Denied' &&
-          ele.status !== 'Abort') {
-          return true
-        }
-        if (status === 'fail' &&
-          ele.status === 'Denied') {
-          return true
-        }
-        return ele.status === status
-      });
+    let out = this.get('model');
     return out;
   }.property('model.@each.status', 'status'),
   actions: {

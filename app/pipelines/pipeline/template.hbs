@@ -1,20 +1,22 @@
 {{top-errors errors=errors}}
 
-<section class="header has-tabs clearfix row">
-  <h1 class="col span-2" style="margin-top: 8px">{{input type="text" value=model.pipeline.name classNames="form-control" placeholder="Pipeline Name"}}</h1>
-  <div class="right-buttons pipeline-wrap-header-button">
-    {{#save-cancel class="pipeline-save-cancel" createLabel=(if (eq mode 'duplicate') 'newPipeline.add' 'newPipeline.save') save="save" cancel="cancel"}}
-    {{/save-cancel}}
-  </div>
+<section class="has-tabs clearfix row">
+  <h1 class="col span-2" style="margin-top: 8px">
+    {{#if editable}}
+      {{input type="text" value=model.pipeline.name classNames="form-control" placeholder="Pipeline Name" }}
+    {{else}}
+      {{model.pipeline.name}}
+    {{/if}}
+  </h1>
 </section>
 
 <section class="pipeline-container">
   {{pipeline-stages
     pipeline=model.pipeline
     accounts=model.accounts
-    stagesDraggable=true
+    stagesDraggable=editable
     model=stages
-    editable=true
+    editable=editable
     editMode="edit"
   }}
 </section>
@@ -22,9 +24,33 @@
 <div class="mt-10"></div>
 {{pipeline/pipeline-parameters
   pipeline=model.pipeline
+  preview=(if (eq editable true) false true)
 }}
 
 <div class="mt-10"></div>
 {{pipeline/pipeline-trigger
   model=model
+  edit=editable
 }}
+
+{{#if (eq mode "review")}}
+<section class="header has-tabs clearfix">
+  <ul class="tab-nav">
+    <li>
+      <a href="javascript:void(0);" class="active ember-view">History</a>
+    </li>
+  </ul>
+</section>
+{{pipeline/table-activity
+  filteredPiplineHistory=filteredPiplineHistory
+  expendAll=false
+}}
+{{/if}}
+
+{{#if (not-eq mode "review")}}
+  <div class="mt-20"></div>
+  <div class="text-center pipeline-wrap-header-button">
+    {{#save-cancel class="pipeline-save-cancel" createLabel=(if (eq mode 'duplicate') 'newPipeline.add' 'newPipeline.save') save="save" cancel="cancel"}}
+    {{/save-cancel}}
+  </div>
+{{/if}}

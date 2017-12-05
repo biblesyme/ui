@@ -48,7 +48,6 @@ export default Ember.Service.extend({
   loadRepository(pipeline, accounts, fn1, fn2) {
     var pipelineStore = this.get('pipelineStore');
     var selectedGitUser = accounts.find(ele => ele.id === pipeline.stages[0].steps[0].gitUser);
-    debugger
     return pipelineStore.find('scmSetting', null, { forceReload: true }).then((res) => {
       fn1(res);
       if (res.find(ele => ele.isAuth)) {

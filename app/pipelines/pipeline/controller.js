@@ -8,6 +8,20 @@ export default Ember.Controller.extend({
     return pipeline.stages
   }.property('model'),
   errors: null,
+  filteredPiplineHistory: function(){
+    debugger
+    let pipelineHistory = this.get('model.pipelineHistory');
+    let pipeline = this.get('model.pipeline');
+    if(!pipelineHistory){
+      return;
+    }
+    let filteredPiplineHistory = pipelineHistory.filter(ele=>ele.pipelineSource.id === pipeline.id);
+    return filteredPiplineHistory;
+  }.property('pipelineHistory'),
+  editable: function(){
+    let mode = this.get('mode');
+    return (mode !== 'review');
+  }.property('mode'),
   actions: {
     save: function(success) {
       var model = this.get('model');

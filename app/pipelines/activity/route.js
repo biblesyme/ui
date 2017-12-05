@@ -12,7 +12,7 @@ export default Ember.Route.extend({
     return Ember.RSVP.hash({
       activity
     }).then(({activity})=>{
-      return {activity,stageIndex:0,stepIndex:0,activityLogs:{}}
+      return {activity}
     });
   },
 });

@@ -12,6 +12,7 @@ var convertObjectToArry = function(obj) {
 
 export default Ember.Component.extend({
   env: {},
+  edit: true,
   init() {
     this._super();
     var parameters = this.get('pipeline.parameters');

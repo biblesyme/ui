@@ -14,7 +14,6 @@ export default Ember.Route.extend({
   },
   afterModel: function(model, transition) {
     var params = transition.queryParams;
-    debugger
     if(params.forceLoad === 'true'){
       return
     }
