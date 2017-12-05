@@ -7,7 +7,7 @@ const { get } = Ember;
 
 const ORCHESTRATION_STACKS = [
   'k8s',
-  'CICD'
+  'pipeline'
 ];
 
 export default Ember.Mixin.create({
