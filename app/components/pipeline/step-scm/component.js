@@ -84,8 +84,10 @@ export default Ember.Component.extend({
     var repos = this.get('repos');
     var modalOpts = this.get('modalOpts');
     if(modalOpts.type === 'add' && repos.content.length){
-          this.set('selected', repos.find(()=>true));
-        }
+      let selected = repos.find(()=>true);
+      this.set('selected', selected);
+      this.set('selectedModel.repository', selected.clone_url);
+    }
     if(selectedModel.repository){
       var selected = repos.find((ele)=>{
         if(ele.clone_url === selectedModel.repository){

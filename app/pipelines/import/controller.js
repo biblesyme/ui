@@ -14,6 +14,8 @@ export default Ember.Controller.extend(NewOrEdit, {
   editing:   false,
   compose:   null,
   files:     null,
+  growl: Ember.inject.service(),
+
   init() {
     this._super(...arguments);
   },
@@ -34,7 +36,7 @@ export default Ember.Controller.extend(NewOrEdit, {
         success(true)
         this.transitionToRoute('pipelines.ready.pipelines')
       }).catch((err)=>{
-        console.log(err)
+        this.get('growl').fromError(err.message);
         return success(false)
       })
     },

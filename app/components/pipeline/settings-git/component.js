@@ -122,11 +122,7 @@ export default Ember.Component.extend({
       var scmType = model.scmType;
       var pipelineStore = this.get('pipelineStore');
       model.doAction('remove').then((res) => {
-        pipelineStore.findAll('scmSetting').then((res) => {
-          this.set('scmSetting', res);
-        })
-        // this.set('oauthModel', pipelineStore.createRecord({ type: 'scmSetting', scmType: scmType}));
-      })
+      });
     },
     promptDisable: function() {
       this.set('confirmDisable', true);

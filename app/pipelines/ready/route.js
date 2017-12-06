@@ -18,11 +18,16 @@ export default Ember.Route.extend({
       return
     }
     if(transition.intent.name === 'pipelines.ready' || transition.targetName === 'pipelines.ready.index'){
-      this.get('router').transitionTo('pipelines.ready.activities');
+      // skip to pipelines page when there is no pipeline
+      if (model.content&&!model.content.length) {
+        this.get('router').transitionTo('pipelines.ready.pipelines');
+      }else{
+        this.get('router').transitionTo('pipelines.ready.activities');
+      }
     }
     // skip to pipelines page when there is no pipeline
-    if (!model.content.length) {
-      this.get('router').transitionTo('pipelines.ready.pipelines');
-    }
+    // if (model.content&&!model.content.length&&transition.intent.targetName==='pipelines.ready.pipelines') {
+    //   this.get('router').transitionTo('pipelines.ready.pipelines');
+    // }
   },
 });

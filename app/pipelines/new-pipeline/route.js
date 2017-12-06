@@ -15,5 +15,8 @@ export default Ember.Route.extend({
         accounts: accounts
       });
     })
-  }
+  },
+  resetController(controller,model){
+    controller.set('errors', null);
+  },
 });

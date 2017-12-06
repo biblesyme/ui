@@ -3,13 +3,13 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   queryParams: ['mode'],
   mode:'',
-  stages: function() {
+  growl: Ember.inject.service(),
+  stagges: function() {
     var pipeline = this.get('model.pipeline');
     return pipeline.stages
   }.property('model'),
   errors: null,
   filteredPiplineHistory: function(){
-    debugger
     let pipelineHistory = this.get('model.pipelineHistory');
     let pipeline = this.get('model.pipeline');
     if(!pipelineHistory){
@@ -32,16 +32,18 @@ export default Ember.Controller.extend({
         return
       }
       var mode = this.get('mode');
-      (function(){
+      (()=>{
         if(mode==='duplicate'){
-          return model.pipeline.save()
+          return model.pipeline.save();
         }
-        return model.pipeline.doAction('update', model.pipeline.serialize())
+        return model.pipeline.doAction('update', model.pipeline.serialize());
       })()
       .then(() => {
         success(true)
         this.set('errors',null);
         this.transitionToRoute('pipelines.ready.pipelines')
+      }).catch((err)=>{
+        this.get('growl').fromError(err.message);
       }).finally(()=>{
         success(false)
       })

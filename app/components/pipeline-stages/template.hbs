@@ -33,7 +33,7 @@
             {{/if}}
 
             {{pipeline-steps
-              review=editable
+              review=(if editable false true)
               pipeline=pipeline
               accounts=accounts
               stageIndex=(index-add index)

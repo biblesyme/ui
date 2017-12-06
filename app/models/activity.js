@@ -16,7 +16,7 @@ const STATUS_LABEL_ENUMS = {
   'Building': 'running',
   'Success': 'success',
   'Fail': 'fail',
-  'Denied': 'denid',
+  'Denied': 'denied',
   'Abort': 'abort'
 }
 

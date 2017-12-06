@@ -1,7 +1,9 @@
 import Ember from 'ember';
+import C from 'ui/utils/constants';
 
 const DEFAULT_REGISTRY = 'index.docker.io';
 export default Ember.Component.extend({
+  projectId: Ember.computed.alias(`tab-session.${C.TABSESSION.PROJECT}`),
   detectingPush: false,
   registries: null,
   matchedRegistry: null,
@@ -9,9 +11,7 @@ export default Ember.Component.extend({
   registriesRoute: '',
   init(){
     this._super();
-    var route = this.router.generate('registries.new');
-    route = route.replace('#','');
-    this.set('registriesRoute',route);
+    this.set('registriesRoute',`/env/${this.get('projectId')}/infra/registries/add`);
   },
   resolvedRegistry: function(){
     var images = this.get('selectedModel.targetImage');
@@ -28,7 +28,12 @@ export default Ember.Component.extend({
     return DEFAULT_REGISTRY;
   }.property('selectedModel.targetImage'),
   imageObserves: function(){
-    this.set('selectedModel.push',false);
+    if(this.get('selectedModel.targetImage')){
+      this.pushObserves();
+    }
+    else{
+      this.set('selectedModel.push',false);
+    }
   }.observes('selectedModel.targetImage'),
   pushObserves: Ember.on('init', Ember.observer('selectedModel.push',function(){
     Ember.run.once(()=>{

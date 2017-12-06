@@ -19,14 +19,24 @@ export default Ember.Component.extend({
   statusClass: null,
   status: '',
   confirmDisable          : false,
+  clearing: false,
   actions:{
     disable: function(){
+      let clearing = this.get('clearing');
+      if(clearing){
+        return
+      }
+      this.set('clearing', true);
       this.get('model.settings').doAction('reset').then((res)=>{
         this.set('model.settings',res);
         window.location.reload();
       })
     },
     promptDisable: function() {
+      let clearing = this.get('clearing');
+      if(clearing){
+        return
+      }
       this.set('confirmDisable', true);
       Ember.run.later(this, function() {
         this.set('confirmDisable', false);

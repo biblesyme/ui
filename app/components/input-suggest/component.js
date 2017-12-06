@@ -27,7 +27,7 @@ export default Ember.Component.extend(DropdownComponentMixin, {
 function onOpen() {
   this.$('.dropdown-menu').css({
     right: '0',
-    maxWidth: '200px',
+    maxWidth: 'none',
     maxHeight: '300px',
     overflow: 'hidden',
     overfloyY: 'auto'

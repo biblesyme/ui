@@ -42,7 +42,7 @@ export default Ember.Service.extend({
       let info = stack.get('externalIdInfo');
       return (info.kind === C.EXTERNAL_ID.KIND_CATALOG || info.kind === C.EXTERNAL_ID.KIND_SYSTEM_CATALOG) &&
         info.base === C.EXTERNAL_ID.KIND_INFRA &&
-        info.name === 'pipeline';
+        info.name === 'CICD';
     });
   },
   loadRepository(pipeline, accounts, fn1, fn2) {

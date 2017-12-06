@@ -33,7 +33,7 @@
     {{pipeline/pipeline-expressions
       pipeline=modalOpts.pipeline
       model=model
-      editing=(if (not-eq modalOpts.mode 'review') true false)
+      editing=(if (eq modalOpts.mode 'review') false true)
     }}
   {{/if}}
 </div>
@@ -46,7 +46,7 @@
   {{new-select
     content=parallelChoice
     value=parallel
-    disabled=(if (eq modalOpts.type 'review') true false)
+    disabled=(if (eq modalOpts.mode 'review') true false)
   }}
   {{#if (eq parallel 'true')}}
     <p class="mt-0 text-small text-info mb-0">Make steps running simultaneously</p>

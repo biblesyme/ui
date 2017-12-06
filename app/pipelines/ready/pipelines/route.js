@@ -8,7 +8,7 @@ export default Ember.Route.extend({
       return []
     }
     var pipelineStore = this.get('pipelineStore');
-    var model = pipelineStore.findAll('pipeline');
+    var model = pipelineStore.find('pipeline');
     return model
   }
 });

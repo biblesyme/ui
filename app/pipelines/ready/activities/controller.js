@@ -13,12 +13,13 @@ export default Ember.Controller.extend({
         return false
       });
     return out;
-  }.property('model.@each.status', 'status'),
+  }.property('model.@each.status'),
   filtered: function() {
-    var status = this.get('status');
     let out = this.get('model');
+    this.set('bulkActions', !!out.get('length'));
     return out;
-  }.property('model.@each.status', 'status'),
+  }.property('model.@each.status'),
+  bulkActions: false,
   actions: {
     runPipelines: function() {
       this.get('modalService').toggleModal('modal-pipeline-run', {

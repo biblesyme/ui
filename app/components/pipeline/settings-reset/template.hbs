@@ -6,13 +6,19 @@
   expandOnInit=false
   expand=(action expandFn)
 }}
-  {{#if confirmDisable}}
-    <button class="btn bg-error" {{action "disable"}}>
-      <i class="icon icon-alert"></i> Are You Sure To Clear Data?
+  {{#if clearing}}
+    <button class="btn bg-disabled">
+      <i class="icon icon-spinner icon-spin"></i> Clearing
     </button>
   {{else}}
-    <button class="btn bg-error" {{action "promptDisable"}}>
-      <i class="icon icon-umbrella"></i>Clear Data
-    </button>
+    {{#if confirmDisable}}
+      <button class="btn bg-error" {{action "disable"}}>
+        <i class="icon icon-alert"></i> Are You Sure To Clear Data?
+      </button>
+    {{else}}
+      <button class="btn bg-error" {{action "promptDisable"}}>
+        <i class="icon icon-umbrella"></i> Clear Data
+      </button>
+    {{/if}}
   {{/if}}
 {{/accordion-list-item}}
