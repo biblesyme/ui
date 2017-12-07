@@ -9,7 +9,10 @@ export default Ember.Component.extend({
   }.observes('otherEnv'),
   init() {
     this._super();
-    var endpoint = this.get('model.endpoint')
-    this.set('otherEnv', endpoint ? true : false)
+    var endpoint = this.get('model.endpoint');
+    var otherEnv = endpoint ? true : false;
+    var deployEnv = otherEnv ? 'others' : 'local';
+    this.set('model.deployEnv', deployEnv);
+    this.set('otherEnv', otherEnv);
   }
 });

@@ -97,7 +97,7 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
         steps: []
       })
     }
-   if (opts.stage&&opts.stage.conditions && Object.keys(opts.stage.conditions).length) {
+    if (opts.stage&&opts.stage.conditions && Object.keys(opts.stage.conditions).length) {
       this.set('model.expressions', true);
     }
     this.get('userStore')
@@ -128,24 +128,20 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
   },
   actions: {
     add: function(success) {
-      var added = this.get('modalOpts').cb({
-        ...this.get('model'),
-        id: Date.now(),
-        approvers: this.getApprovals()
-      });
-      if(!added){
-        this.set('errors',['The same stage name is not allowed!']);
+      var model = this.get('model');
+      var approvers = [];
+      if(!model.name){
+        this.set('errors',['"Name" is required!']);
         return success(false);
       }
-      success(true);
-      this.send('cancel');
-    },
-    edit: function(success) {
+      if(model.needApprove){
+        approvers = this.getApprovals();
+      }
       var added = this.get('modalOpts').cb({
-        ...this.get('model'),
+        ...model,
         id: Date.now(),
-        approvers: this.getApprovals()
-      })
+        approvers: approvers
+      });
       if(!added){
         this.set('errors',['The same stage name is not allowed!']);
         return success(false);

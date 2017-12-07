@@ -29,5 +29,8 @@ export default Ember.Component.extend({
         this.get('state').set('selecting', false);
       }, 0)
     },
+  },
+  willDestroyElement: function(){
+    this.get('state').set('selecting', false);
   }
 });

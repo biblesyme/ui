@@ -613,6 +613,7 @@ newPipeline:
     placeholder: Description
   approvers:
     label: Approvers
+    noAccounts: Every one can approve it if there are no specific users selected
   build:
     variable: Build Variables
     add: Add Another

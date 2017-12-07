@@ -28,7 +28,7 @@ export default Ember.Component.extend({
     if(!accounts){
       return [];
     }
-    return accounts
+    return accounts;
   }.property('modalOpts.accounts'),
   init(){
     this._super(...arguments);

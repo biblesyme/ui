@@ -8,14 +8,20 @@ export default Ember.Controller.extend({
     let out = this.get('model')
       .filter(ele => {
         if (ele.status === 'Pending') {
-          return true
+          return true;
         }
-        return false
+        return false;
       });
     return out;
   }.property('model.@each.status'),
   filtered: function() {
-    let out = this.get('model');
+    let out = this.get('model')
+      .filter(ele => {
+        if (ele.status !== 'Pending') {
+          return true;
+        }
+        return false;
+      });
     this.set('bulkActions', !!out.get('length'));
     return out;
   }.property('model.@each.status'),
