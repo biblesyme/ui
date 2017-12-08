@@ -9,14 +9,14 @@ export default Ember.Controller.extend({
     return pipeline.stages
   }.property('model'),
   errors: null,
-  filteredPiplineHistory: function(){
+  filteredPipelineHistory: function(){
     let pipelineHistory = this.get('model.pipelineHistory');
     let pipeline = this.get('model.pipeline');
     if(!pipelineHistory){
       return;
     }
-    let filteredPiplineHistory = pipelineHistory.filter(ele=>ele.pipelineSource.id === pipeline.id);
-    return filteredPiplineHistory;
+    let filteredPipelineHistory = pipelineHistory.filter(ele=>ele.pipelineSource.id === pipeline.id);
+    return filteredPipelineHistory;
   }.property('pipelineHistory'),
   editable: function(){
     let mode = this.get('mode');

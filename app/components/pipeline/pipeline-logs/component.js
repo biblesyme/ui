@@ -55,12 +55,16 @@ export default Ember.Component.extend(ThrottledResize, {
   },
   showLogs: function() {
     var inst = this.get('instance');
-    var key = inst.step[0] + '-' + inst.step[1];
+    var key = inst.stageIndex + '-' + inst.stepIndex;
     Ember.run.next(() => {
       this.send('scrollToBottom');
     });
+    if(!inst.activityLogs[key]){
+      this.observeInstance();
+      return
+    }
     return inst.activityLogs[key];
-  }.property('instance.step.@each', 'showLogsTrigger'),
+  }.property('instance.stageIndex','instance.stepIndex', 'showLogsTrigger'),
   showLogsTrigger: '',
   observeInstance: function() {
     this.disconnect();
@@ -68,7 +72,7 @@ export default Ember.Component.extend(ThrottledResize, {
   }.observes('instance'),
   didInsertElement: function() {
     this._super();
-    Ember.run.next(this, 'exec');
+    // Ember.run.next(this, 'exec');
   },
 
   exec: function() {
@@ -112,7 +116,7 @@ export default Ember.Component.extend(ThrottledResize, {
       });
       var inst = this.get('instance');
       var logsAry = inst.activityLogs;
-      var key = inst.step[0] + '-' + inst.step[1];
+      var key = inst.stageIndex + '-' + inst.stepIndex;
       Ember.set(logsAry, key, logs);
       this.set('showLogsTrigger', logs);
       // logs&&this.set('showLogs', logs);
@@ -124,9 +128,8 @@ export default Ember.Component.extend(ThrottledResize, {
     };
 
     var instance = this.get('instance');
-    var step = instance.step;
     var activity = instance.activity;
-    var params = `?activityId=${activity.id}&stageOrdinal=${step[0]}&stepOrdinal=${step[1]}`;
+    var params = `?activityId=${activity.id}&stageOrdinal=${instance.stageIndex}&stepOrdinal=${instance.stepIndex}`;
     var url = ("ws://" + window.location.host + this.get('pipeline.pipelinesEndpoint') + '/ws/log' + params);
     var socket = new WebSocket(url);
     this.set('socket', socket);
@@ -160,7 +163,6 @@ export default Ember.Component.extend(ThrottledResize, {
 
   disconnect: function() {
     this.set('status', 'closed');
-
     var socket = this.get('socket');
     if (socket) {
       socket.close();

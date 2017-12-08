@@ -60,16 +60,17 @@ export default Ember.Component.extend(ModalBase, NewOrEdit, {
     if ( this.get('isLocal') ) {
       out.push({
         translationKey: 'accountsPage.index.table.username',
-        name: 'username',
-        sort: ['username'],
+        name: 'name',
+        sort: ['name'],
       });
     }
-
-    out.push({
-      translationKey: 'accountsPage.index.table.identity',
-      name: 'name',
-      sort: ['name'],
-    });
+    else{
+      out.push({
+        translationKey: 'accountsPage.index.table.identity',
+        name: 'name',
+        sort: ['name'],
+      });
+    }
 
     return out;
   }),

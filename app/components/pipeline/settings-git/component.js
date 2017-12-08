@@ -2,6 +2,12 @@ import Ember from 'ember';
 import { STATUS, STATUS_INTL_KEY, classForStatus } from 'ui/components/accordion-list-item/component';
 import C from 'ui/utils/constants';
 
+function oauthURIGenerator(clientId){
+  return {
+    'gitlab': '/oauth/authorize?client_id=' + clientId + '&response_type=code',
+    'github': '/login/oauth/authorize?client_id=' + clientId + '&response_type=code&scope=repo+admin%3Arepo_hook'
+  }
+}
 export default Ember.Component.extend({
   accountId: function() {
     return this.get('session.' + C.SESSION.ACCOUNT_ID)
@@ -18,7 +24,7 @@ export default Ember.Component.extend({
     var redirect = this.get('session').get(C.SESSION.BACK_TO) || window.location.href;
     redirect = redirect.split('#')[0];
     return redirect;
-  }.property('session.@each'),
+  }.property('session.'+ C.SESSION.BACK_TO),
   init() {
     this._super();
     // set default oauth
@@ -50,7 +56,7 @@ export default Ember.Component.extend({
       oauthModel = pipelineStore.createRecord({ type: 'scmSetting', scmType: type, id: type });
     }
     this.set('oauthModel', oauthModel);
-  }.observes('scmSettings.@each'),
+  }.observes('scmSettings.[]'),
   didReceiveAttrs() {
     if (!this.get('expandFn')) {
       this.set('expandFn', function(item) {
@@ -69,12 +75,12 @@ export default Ember.Component.extend({
     var accounts = this.get('accounts');
     var accountId = this.get('accountId');
     return accounts.filter(ele => ele.accountType === 'github');
-  }.property('accounts.@each'),
+  }.property('accounts.[]'),
   gitlabAccounts: function() {
     var accounts = this.get('accounts');
     var accountId = this.get('accountId');
     return accounts.filter(ele => ele.accountType === 'gitlab');
-  }.property('accounts.@each'),
+  }.property('accounts.[]'),
   updateEnterprise: function() {
     if (this.get('isEnterprise')) {
       var hostname = this.get('oauthModel.hostName') || '';
@@ -94,8 +100,12 @@ export default Ember.Component.extend({
   },
 
   enterpriseDidChange: function() {
+    if(this.get('oauthModel.isAuth')){
+      return
+    }
     Ember.run.once(this, 'updateEnterprise');
   }.observes('isEnterprise', 'oauthModel.hostName', 'secure'),
+
   actions: {
     changeOauthType: function(type) {
       this.set('selectedOauthType', type);
@@ -130,38 +140,47 @@ export default Ember.Component.extend({
         this.set('confirmDisable', false);
       }, 10000);
     },
-    authenticate: function() {
+    authenticate: function(mode) {
       var clientId = this.get('oauthModel.clientID');
       var hostname = this.get('oauthModel.hostName');
       var scheme = this.get('oauthModel.scheme');
-      var oauthHostName = 'gitlab.com';
-      if(!scheme){
-        scheme = 'https://';
+      var authorizeURL;
+      let oauthURI = oauthURIGenerator(clientId);
+      if(mode === 'add'){
+        hostname||(hostname = this.get('selectedOauthType') + '.com')
+        authorizeURL = scheme + hostname + oauthURI[this.get('selectedOauthType')];
       }
-      if(this.get('isEnterprise')){
-        if(!this.get('oauthModel.hostName')){
-          this.send('showError', "'Enterprise Host' is required!");
-          return
+      else{
+        var oauthHostName = 'gitlab.com';
+        if(!scheme){
+          scheme = 'https://';
         }
-      }
-      this.send('clearError');
-      this.set('testing', true);
+        if(this.get('isEnterprise')){
+          if(!this.get('oauthModel.hostName')){
+            this.send('showError', "'Enterprise Host' is required!");
+            return
+          }
+        }
+        this.send('clearError');
+        this.set('testing', true);
 
-      if (this.get('isEnterprise')) {
-        if (hostname) {
-          oauthHostName = hostname;
-        }
-      }
-      var authorizeURL = scheme + oauthHostName + '/oauth/authorize?client_id=' + clientId + '&response_type=code';
-      if (this.get('selectedOauthType') === 'github') {
-        oauthHostName = 'github.com';
         if (this.get('isEnterprise')) {
           if (hostname) {
             oauthHostName = hostname;
           }
         }
-        authorizeURL = scheme + oauthHostName + '/login/oauth/authorize?client_id=' + clientId + '&response_type=code&scope=repo+admin%3Arepo_hook';
+        authorizeURL = scheme + oauthHostName + oauthURI['gitlab'];
+        if (this.get('selectedOauthType') === 'github') {
+          oauthHostName = 'github.com';
+          if (this.get('isEnterprise')) {
+            if (hostname) {
+              oauthHostName = hostname;
+            }
+          }
+          authorizeURL = scheme + oauthHostName + oauthURI['github'];
+        }
       }
+      
       this.get('github').authorizeTest(
         authorizeURL,
         (err, code) => {

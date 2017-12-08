@@ -19,7 +19,6 @@ export default Ember.Controller.extend({
       var model = this.get('model');
       var errors=model.pipeline.validationErrors();
       if(errors.length>0){
-        debugger
         this.set('errors',errors);
         success(false);
         return

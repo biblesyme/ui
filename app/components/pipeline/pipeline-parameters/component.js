@@ -30,7 +30,7 @@ export default Ember.Component.extend({
   envObserves: function() {
     var env = this.get('env')
     this.set('pipeline.parameters', convertObjectToArry(env))
-  }.observes('env.@each'),
+  }.observes('env.[]'),
   expandFn: function(item) {
     item.toggleProperty('expanded');
   },

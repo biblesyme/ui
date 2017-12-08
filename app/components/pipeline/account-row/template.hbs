@@ -8,14 +8,7 @@
   {{t (concat-str 'model.account.kind.' model.kind character='')}}
 </td>
 {{#if isLocal}}
-  <td data-title="{{t 'accountsPage.index.table.username'}}:" >
-    {{#if model.username}}
-      {{model.username}}
-    {{else}}
-      <span class="text-muted">{{t 'accountsPage.index.table.noName'}}</span>
-    {{/if}}
-  </td>
-  <td data-title="{{t 'generic.name'}}:" class="force-wrap">
+  <td data-title="{{t 'generic.username'}}:" class="force-wrap">
     {{model.displayName}}
   </td>
 {{else}}
@@ -27,6 +20,8 @@
     {{/if}}
   </td>
 {{/if}}
+{{#if (not-eq modalOpts.mode 'review')}}
 <td data-title="{{t 'generic.actions'}}:" class="actions">
   <a href="javascript:;" {{action "pipelineSelect" model}}><i class="icon icon-close text-error"></i></a>
 </td>
+{{/if}}

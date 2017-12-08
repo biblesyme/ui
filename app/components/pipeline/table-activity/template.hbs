@@ -1,6 +1,6 @@
-{{#if filteredPiplineHistory.length}}
+{{#if filteredPipelineHistory.length}}
     {{!-- {{#accordion-list as |al expandFn| }} --}}
-      {{#each filteredPiplineHistory as |activity|}}
+      {{#each filteredPipelineHistory as |activity index|}}
         {{#accordion-list-item
           title=activity.repository
           detail=(concat-str activity.branch ' ' (sub-str activity.commitInfo 0 8) ' ' (date-str activity.start_ts) )
@@ -12,31 +12,11 @@
           className=(concat-str "header-pipeline" model.activities.status)
           as | parent |
         }}
-        <div class="row">
-          <div class="col span-4" style="display:inline-block;vertical-align: top;">
-            {{pipeline-history-table
-              stageInfo=activity.pipelineSource.stages
-              body=activity.activity_stages
-              stageIndexLog=activity.stageIndex
-              stepIndexLog=activity.stepIndex
-              showLogsActivity=(action "showLogsActivity")
-              activity=activity
-              sortBy=sortBy
-              bulkActions=true
-              search=true
-              paging=true
-              showHost=true
-              showInstanceState=false
-              groupByKey=groupBy
-              groupByRef="stack"
-            }}
-          </div>
-          <div class="col span-8 pull-right" style="display:inline-block;">
-            {{pipeline/pipeline-logs
-              instance=activity.logModel
-              }}
-          </div>
-        </div>
+          {{pipeline/table-activity-row
+            activity=activity
+            logStatus=logStatus
+            index=index
+          }}
         {{/accordion-list-item}}
       {{/each}}
     {{!-- {{/accordion-list}} --}}

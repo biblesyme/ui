@@ -62,7 +62,6 @@ export default Ember.Service.extend({
   },
 
   authorizeTest: function(cb) {
-    debugger
     var responded = false;
     window.onGithubTest = function(err,code) {
       if ( !responded ) {

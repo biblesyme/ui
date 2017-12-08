@@ -73,7 +73,7 @@ export default Ember.Service.extend({
         clearInterval(timer);
         if( !responded ) {
           responded = true;
-          cb({type: 'error', message: 'Github access was not authorized'});
+          cb({type: 'error', message: 'Access was not authorized'});
         }
       }
     }, 500);

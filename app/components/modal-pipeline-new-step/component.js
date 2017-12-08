@@ -118,7 +118,7 @@ class StepType {
   }
 }
 
-var validationErrors = (module) => {
+var validationErrors = (module, editing) => {
   var errors = [];
   switch (module.type) {
     case 'scm':
@@ -173,7 +173,7 @@ var validationErrors = (module) => {
         if (!module.accesskey) {
           errors.push('"Accesskey" is required!');
         }
-        if (!module.secretkey) {
+        if (!module.secretkey && !editing) {
           errors.push('"Secretkey" is required!');
         }
       }else{
@@ -199,7 +199,7 @@ var validationErrors = (module) => {
         if (!module.accesskey) {
           errors.push('"Accesskey" is required!');
         }
-        if (!module.secretkey) {
+        if (!module.secretkey && !editing) {
           errors.push('"Secretkey" is required!');
         }
       }else{
@@ -216,7 +216,7 @@ var validationErrors = (module) => {
         if (!module.accesskey) {
           errors.push('"Accesskey" is required!');
         }
-        if (!module.secretkey) {
+        if (!module.secretkey && !editing) {
           errors.push('"Secretkey" is required!');
         }
       }else{
@@ -311,14 +311,15 @@ export default Ember.Component.extend(ModalBase, {
   actions: {
     add: function(success) {
       var model = this.get('editingModels')[this.get('type')];
-      var errors = validationErrors(model);
+      let modalOpts = this.get('modalOpts');
+      var errors = validationErrors(model, modalOpts.type !== 'add');
       if (errors.length > 0) {
         this.set('errors', errors);
         success(false);
         return true;
       }
       var arryParameters = convertObjectToArry(model.env);
-      this.get('modalOpts').cb({
+      modalOpts.cb({
         ...model,
         env: arryParameters
       });

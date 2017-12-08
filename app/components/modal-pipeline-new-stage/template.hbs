@@ -89,7 +89,7 @@
         as |sortable kind row dt|
       }}
         {{#if (eq kind "row")}}
-          {{pipeline/account-row model=row isLocal=isLocal}}
+          {{pipeline/account-row model=row isLocal=isLocal modalOpts=modalOpts}}
         {{else if (eq kind "norows")}}
           <td colspan="{{if isLocal '6' '5'}}" class="text-center text-muted pt-20 pb-20">{{t 'newPipeline.approvers.noAccounts'}}</td>
         {{/if}}

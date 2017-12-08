@@ -50,7 +50,7 @@
     {{top-errors errors=errors}}
     <h3 class="display: inline-block">Authenticated Users</h3>
     <div class="row text-center pull-right">
-      <button disabled={{createDisabled}} class="btn bg-primary" {{action "authenticate"}}>
+      <button disabled={{createDisabled}} class="btn bg-primary" {{action "authenticate" "add"}}>
         {{#if testing}}
           <i class="icon icon-spinner icon-spin"></i> {{t 'authPage.github.testAuth.buttonText.post'}}
         {{else}}

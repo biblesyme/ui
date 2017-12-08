@@ -23,22 +23,9 @@ export default Ember.Controller.extend({
       this.set('model.activity.expanded', true);
     });
   },
-  // runningObserves: function(){
-  //   var stages = this.get('model.activity.activity_stages');
-  //   var runningStage = stages.findIndex(ele=>ele.status==='Building');
-  //   if(runningStage === -1){
-  //     return
-  //   }
-  //   var runningStep = stages[runningStage].activity_steps.findIndex(ele=>ele.status==='Building');
-  //   if(runningStep === -1) {
-  //     return
-  //   }
-  //   this.set('model.stageIndex',runningStage);
-  //   this.set('model.stepIndex',runningStep);
-  // }.observes('model.activity.activity_stages.@each'),
-  filteredPiplineHistory: function() {
+  filteredPipelineHistory: function() {
     return [ this.get('model').activity ];
-  }.property('model.activity.activity_stages.@each'),
+  }.property('model.activity.activity_stages.@each.status'),
   isHistory: function() {
     return this.get('activeTab') === 'history'
   }.property('activeTab'),

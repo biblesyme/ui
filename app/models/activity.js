@@ -24,31 +24,6 @@ export default Resource.extend({
   type: 'activity',
   router: Ember.inject.service(),
   userStore: Ember.inject.service('user-store'),
-  runningObserves: function(){
-    var stages = this.get('activity_stages');
-    var runningStage = stages.findIndex(ele=>ele.status==='Building');
-    if(runningStage === -1){
-      return
-    }
-    var runningStep = stages[runningStage].activity_steps.findIndex(ele=>ele.status==='Building');
-    if(runningStep === -1) {
-      return
-    }
-    Ember.run.later(()=>{
-      this.set('stageIndex',runningStage);
-      this.set('stepIndex',runningStep);
-    });
-  }.observes('activity_stages.@each'),
-  stageIndex: 0,
-  stepIndex: 0,
-  activityLogs: {},
-  logModel: function(){
-    return {
-      activity: this,
-      step: [this.get('stageIndex'),this.get('stepIndex')],
-      activityLogs: this.get('activityLogs'),
-    }
-  }.property('stageIndex','stepIndex'),
   actions: {
     rerun: function() {
       return this.doAction('rerun')
@@ -101,7 +76,7 @@ export default Resource.extend({
       { divider: true },
       { label: 'action.remove', icon: 'icon icon-trash', action: 'remove', enabled: true, bulkable: true },
     ];
-  }.property('actionLinks.@each'),
+  }.property('actionLinks.{rerun,stop,approve,deny,remove}'),
   commit: function() {
     var commitInfo = this.get('commitInfo')
     if (commitInfo) {
