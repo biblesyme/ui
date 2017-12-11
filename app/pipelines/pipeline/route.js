@@ -30,10 +30,12 @@ export default Ember.Route.extend({
             id: '',
             name: ''
           })
+        }else if(params.mode === 'review'){
+          piplineObj = pipeline;
         }else{
           piplineObj = pipelineStore.createRecord(
             pipeline.serialize()
-          )
+          );
         }
         return {
           pipeline: piplineObj,

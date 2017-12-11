@@ -12,7 +12,7 @@ export const headersAll =  [
     name: 'name',
     sort: ['name'],
     searchField: 'pipelineSource.name',
-    translationKey: 'generic.pipeline',
+    translationKey: 'nav.pipelines.tab',
     label: 'Pipeline'
   },
   {
@@ -26,7 +26,7 @@ export const headersAll =  [
     name: 'start_ts',
     sort: ['start_ts'],
     searchField: 'start_ts',
-    translationKey: 'generic.time',
+    translationKey: 'pipelineHistories.time',
     label: 'Time'
   },
   

@@ -97,6 +97,9 @@ export default Ember.Component.extend({
       var triggerClickHint = this.get('triggerClickHint');
       triggerClickHint&&triggerClickHint(val)
       var triggerInputEle = this.get('triggerInputEle');
+      if(!triggerInputEle){
+        return
+      }
       var matchedIndex = this.get('matchedIndex');
       var cursorPosition = this.get('cursorPosition');
       var value = $(triggerInputEle).val();
@@ -142,8 +145,8 @@ export default Ember.Component.extend({
     this.$(document).on('click.hint', clickHiden).on('scroll.hint', scrollPosition);
   },
   willDestroyElement(){
+    this._super();
     this.$(document).off('click.hint');
     this.$(document).off('scroll.hint');
-    this._super(...arguments);
   }
 });

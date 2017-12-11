@@ -23,8 +23,25 @@
 
 <div class="pt-20"></div>
 <div class="inline-form">
+  <label>
+    {{t 'newPipelineStage.runningMode'}}
+  </label>
+  {{new-select
+    content=parallelChoice
+    value=parallel
+    disabled=(if (eq modalOpts.mode 'review') true false)
+  }}
+  {{#if (eq parallel 'true')}}
+    <p class="mt-0 text-small text-info mb-0">{{t 'newPipelineStage.parallelTip'}}</p>
+  {{else}}
+    <p class="mt-0 text-small text-info mb-0">{{t 'newPipelineStage.serialTip'}}</p>
+  {{/if}}
+</div>
+
+<div class="pt-20"></div>
+<div class="inline-form">
   <label>{{check-box class="form-control" checked=model.expressions disabled=(if (eq modalOpts.mode 'review') true)}}
-    Conditions 
+    {{t 'newPipelineStage.conditions'}}
   </label>
   <div class="pt-10"></div>
   {{#if model.expressions}}
@@ -38,27 +55,9 @@
 
 <div class="pt-20"></div>
 <div class="inline-form">
-  <label>
-    Step Running Mode
-  </label>
-  {{new-select
-    content=parallelChoice
-    value=parallel
-    disabled=(if (eq modalOpts.mode 'review') true false)
-  }}
-  {{#if (eq parallel 'true')}}
-    <p class="mt-0 text-small text-info mb-0">Make steps running simultaneously</p>
-  {{else}}
-    <p class="mt-0 text-small text-info mb-0">Make steps running sequentially</p>
-  {{/if}}
-</div>
-
-
-<div class="pt-20"></div>
-<div class="inline-form">
   <div class="pt-10"></div>
   <label>{{check-box class="form-control" checked=model.needApprove disabled=(if (eq modalOpts.mode 'review') true)}}
-    Requires Approval
+    {{t 'newPipelineStage.requireApproval'}}
   </label>
 </div>
 
@@ -66,7 +65,7 @@
 <div class="pt-20"></div>
 <div class="row">
   <div class="col span-12">
-    <label class="pb-5">Approvers</label>
+    <label class="pb-5">{{t 'newPipelineStage.approvers'}}</label>
     {{#if (not-eq modalOpts.mode 'review')}}
       <div class="pt-10"></div>
       {{pipeline/pipeline-approver-search-input

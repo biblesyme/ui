@@ -53,8 +53,6 @@ generic:
   none: None
   noRating: No Rating
   ports: Ports
-  pipelineName: Pipeline Name
-  pipeline: Pipeline
   remove: Remove
   role: Role
   repository: Repository
@@ -73,8 +71,6 @@ generic:
   to: To
   total: Total
   type: Type
-  timeStamp: Timestamp
-  time: Time
   unknown: Unknown
   uuid: UUID
   no: "No"
@@ -285,6 +281,7 @@ authPage:
       ul:
         li1:
           text: 'For standard GitHub, <a href="https://github.com/settings/developers" target="_blank">click here</a> to go applications settings in a new window.'
+          gitlabText: 'For standard GitLab, click <a target="blank" href="https://gitlab.com/profile/applications">here</a> to go applications settings in a new window.'
           ul:
             li1: "For Github Enterprise, login to your account.  Click on Settings, then Applications."
         li2:
@@ -296,7 +293,7 @@ authPage:
             li2: Homepage URL
             li3: '<b>Application description:</b> <span class="text-muted">Anything you like, optional</span>'
             li4: Authorization callback URL
-            li4_2: Redirect URI
+            li4_2: 'Redirect URI:'
         li3:
           text: 'Click "Register Application" '
           text2: 'Click "Save application" '
@@ -309,6 +306,8 @@ authPage:
           labelText: Client Secret
         ghEnterprise:
           labelText: Use a private GitHub Enterprise installation
+        glPrivate:
+          labelText: Use a private GitLab installation
         isGHEnterprise:
           labelText: Use a secure connection
         glEnterprise:
@@ -587,8 +586,19 @@ pipelinesPage:
   lastActivity: LastActivity
   nextRun: NextRun
 
-
-pipelineActivities:
+pipelinesSetting:
+  gitAuthentication: Git Authentication
+  authenticateWithGit: Authenticate with git repository
+  changeConfiguration: To change the configured {oauthType} application, disable OAuth Authentication below and then set it up again.
+  authenticatedUsers: Authenticated Users
+  sureToDisableOAuth: Are You Sure To Disable OAuth Authentication?
+  disableOAuth: Disable OAuth Authentication
+  dataClear: Data Clear
+  resetData: Reset all of the pipeline related data.
+  clearing: Clearing
+  sureToClearData: Are You Sure To Clear Data?
+  clearData: Clear Data
+pipelineHistories:
   history: History
   all: All
   running: Running
@@ -640,11 +650,25 @@ newPipeline:
     everyDay: Every day(at 4:00am)
     cronTimezone: Cron Timezone
     tip: Run when there is new commit
+  parameters: Parameters
+  parameterTip: Set the pipeline environment variables
+  active: Active
 
 newPipelineStage:
   header:
     create: Add a Stage
     edit: Edit Stage
+  runningMode: Step Running Mode
+  modeParallel: parallel
+  modeSerial: serial
+  parallelTip: Make steps running simultaneously
+  serialTip: Make steps running sequentially
+  conditions: Conditions 
+  requireApproval: Requires Approval
+  approvers: Approvers
+  env: Env
+  operator: Operator
+  value: Value
   name: Name
   addStep: Add a Step
 
@@ -723,8 +747,8 @@ newPipelineStep:
     anyThese: All of these
     anyTheseInfo: Run when all of the conditions are met
     targetEnv:
-      label: Target other environment
-      tip: Default target is current environment, if you want target other enviroments, then check this option.
+      label: Target another environment
+      tip: Default target is current environment, if you want target another enviroment, then check this option.
 # If you change translations here also change the translation in app/utils/constants.js under the FALLBACK_TRANSLATIONS key
 # those are present in case we have an error in the app and can not load the translations file
 # the error page will at least make a little sense
@@ -3661,13 +3685,6 @@ nav:
     link: "Preferences"
   pipelines:
     tab: Pipeline
-    active: Active
-    inactive: Inactive
-    add: Add a pipeline
-    stage:
-      add: Add a Stage
-      activity: Activity
-      history: History
 
 ##############################
 # Resource Actions

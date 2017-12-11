@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
     },
     cancel: function() {
       this.set('errors',null);
-      this.transitionToRoute('pipelines.ready.pipelines')
+      window.history.back();
     }
   }
 });

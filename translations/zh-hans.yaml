@@ -37,6 +37,7 @@ generic:
   none: 无
   noRating: 无评价
   ports: 端口
+  repository: 仓库
   remove: 移除
   role: 角色
   save: 保存
@@ -218,6 +219,7 @@ authPage:
         unrestricted: "{appName} 已被设置为允许任何 {github} 用户访问."
       disabled:
         label: GitHub 未设置
+        labelGitlab: GitLab 未设置
         warning: "{appName} 可以设置为允许一组 GitHub 用户和组织成员访问。 由于当前未完成此设置，所以任何可以访问此页面(或API)的用户都对系统有完全控制权限。"
     authenticated:
       header:
@@ -233,29 +235,37 @@ authPage:
         disable: 关闭访问控制
     notAuthenticated:
       header: "1. 设置GitHub应用"
+      headerVariable: "1. 设置{GitHub}应用"
       ul:
         li1:
           text: '标准GitHub， <a href="https://github.com/settings/developers" target="_blank">点击此处</a> 在弹出的新窗口中进行应用设置。'
+          gitlabText: '标准GitLab， <a target="blank" href="https://gitlab.com/profile/applications">点击此处</a> 在弹出的新窗口中进行应用设置。'
           ul:
             li1: "企业版GitHub，请登录你的账号，点击Settings，然后点击Applications进行设置。"
         li2:
           text: '点击 "Register new application" 并填写表单内容:'
+          text2: '填写"Add new application"表格:'
           ul:
             li1: '<b>Application name:</b> <span class="text-muted">任何您喜欢的应用名称, 例如 My {appName}</span>'
+            li1_2: '<b>Name:</b> <span class="text-muted">任何您喜欢的应用名称, 例如 My {appName}</span>'
             li2: 主页 URL
             li3: '<b>Application description:</b> <span class="text-muted">任何你喜欢的描述，可选</span>'
             li4: 授权回调 URL
         li3:
           text: '点击 "Register Application" '
+          text2: '点击 "Save application" '
       form:
         header: '2. 设置 {appName} 使用你的GitHub应用验证'
         subtext: '将新创建GitHub应用的Client ID和Secret复制粘贴到下方的对应输入框中'
+        subtextVariable: '将新创建{GitHub}应用的Client ID和Secret复制粘贴到下方的对应输入框中'
         clientId:
           labelText: 客户端ID
         clientSecret:
           labelText: 客户端秘钥
         ghEnterprise:
           labelText: 使用私有GitHub企业版部署
+        glPrivate:
+          labelText: 使用私有GitLab部署
         isGHEnterprise:
           labelText: 使用安全连接
         enterpriseHost:
@@ -266,6 +276,7 @@ authPage:
       subtext: '测试以确认你的配置是否正确'
       buttonText:
         pre: GitHub验证
+        preVariable: '{GitHub}验证'
         post: 等待GitHub返回
   azuread:
     header:
@@ -2655,6 +2666,8 @@ nav:
     logout: 注销
   userPreferences:
     link: "设定"
+  pipelines:
+    tab: 流水线
 action:
   activate: 激活
   cancelUpgrade: 取消升级
@@ -2674,6 +2687,8 @@ action:
   restart: 重启
   retry: 重试
   rollback: 回滚
+  rerun: 重跑
+  run: 运行
   setDefault: 设置为缺省
   start: 启动
   stop: 停止
@@ -2735,17 +2750,28 @@ pipelinesPage:
     status: 状态
     noData: 当前没有创建然后Pipeline.
     noMatch: 没有匹配的Pipeline.
-  add: 添加Pipeline
-  pipelines: Pipelines
+  add: 添加流水线
+  pipelines: 流水线
   import: 导入 pipeline.yml
   active: Active
   inactive: Inactive
   lastActivity: 最近的活动
   nextRun: 下次运行时间
 
-
-pipelineActivities:
-  activities: Activities
+pipelinesSetting:
+  gitAuthentication: Git 授权
+  authenticateWithGit: 授权使用您的git仓库
+  changeConfiguration: 改变{oauthType}应用, 取消下面的授权，并重新进行授权。
+  authenticatedUsers: 已授权的用户
+  sureToDisableOAuth: 您确定要取消授权吗?
+  disableOAuth: 取消授权
+  dataClear: 数据清除
+  resetData: 重置所有流水线相关的数据.
+  clearing: 清除中
+  sureToClearData: 确定要清除所有数据吗?
+  clearData: 清除数据
+pipelineHistories:
+  history: 历史
   all: 所有
   running: 运行中
   success: 成功
@@ -2784,7 +2810,7 @@ newPipeline:
     label: Builder Image
     buildIn: Build In
     custom: Custom
-  save: 保持
+  save: 保存
   add: 添加
   schedule:
     title: 定时任务
@@ -2795,11 +2821,25 @@ newPipeline:
     everyDay: 每天（凌晨 4:00 am）
     cronTimezone: Cron时区
     tip: 当有新push时才触发Pipeline
+  parameters: 变量
+  parameterTip: 设定流水线环境变量
+  active: 激活
 
 newPipelineStage:
   header:
     create: 添加一个阶段
     edit: 编辑阶段
+  runningMode: 步骤运行模式
+  modeParallel: 并行
+  modeSerial: 串行
+  parallelTip: 使步骤并行运行
+  serialTip: 使步骤串行运行
+  conditions: 条件 
+  requireApproval: 需要审核
+  approvers: 审核人
+  env: 变量
+  operator: 操作符
+  value: 值
   name: 名称
   addStep: 添加一个步骤
 

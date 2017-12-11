@@ -16,8 +16,7 @@ export default Resource.extend({
   }.property('name'),
   cb() {
     this.doAction('remove').then(()=>{
-      var store = this.get('pipelineStore');
-      store._remove('pipeline',this);
+      this.get('router').transitionTo('pipelines.ready.pipelines');
     })
   },
   actions: {

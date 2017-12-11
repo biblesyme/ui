@@ -5,13 +5,17 @@ import ModalBase from 'ui/mixins/modal-base';
 const showKinds = ['user','admin'];
 
 export default Ember.Component.extend(ModalBase, NewOrEdit, {
-  parallelChoice:[{
-    label: 'parallel',
-    value: 'true'
-  },{
-    label: 'serial',
-    value: 'false'
-  }],
+  intl: Ember.inject.service(),
+  parallelChoice: function(){
+    let intl = this.get('intl');
+    return [{
+      label: this.get('intl').t('newPipelineStage.modeParallel'),
+      value: 'true'
+    },{
+      label: this.get('intl').t('newPipelineStage.modeSerial'),
+      value: 'false'
+    }];
+  }.property('intl.locale'),
   parallel: 'true',
   access: Ember.inject.service(),
   classNames: ['large-modal', 'alert'],
