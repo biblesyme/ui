@@ -1,0 +1,15 @@
+<div class="pt-20"></div>
+<div class="inline-form">
+  <label class="acc-label">Strategy {{field-required}}</label>
+  <div>
+  {{new-select
+    content=strategyChoices
+    optionLabelPath="name"
+    optionValuePath="id"
+    value=type
+    disabled=(if (eq modalOpts.type 'review') true false)
+  }}
+  </div>
+</div>
+
+{{component strategyComponent}}

@@ -41,3 +41,12 @@
     modalState=modalState
   }}
 {{/if}}
+
+{{#if (eq type 'deploy')}}
+  {{step-deploy
+    pipeline=pipeline
+    selectedModel=selectedModel
+    modalOpts=modalOpts
+    modalState=modalState
+  }}
+{{/if}}

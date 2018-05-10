@@ -1,6 +1,8 @@
+{{#if showHeader}}
 <section class="header clearfix">
   <h1>{{headerLabel}}</h1>
 </section>
+{{/if}}
 
 <div class="row">
   <div class="col span-11-of-23 mt-0 mb-0">
@@ -62,4 +64,7 @@
 {{/if}}
 
 {{top-errors errors=errors}}
-{{save-cancel editing=true save="save" cancel="cancel"}}
+
+{{#if showBtnSave}}
+  {{save-cancel editing=true save="save" cancel="cancel"}}
+{{/if}}

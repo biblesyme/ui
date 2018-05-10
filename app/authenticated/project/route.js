@@ -32,6 +32,7 @@ export default Route.extend(Preload,{
               this.preload('workload'),
               this.preload('dnsRecord'),
               this.preload('secret'),
+              this.preload('ingress'),
               this.preload('service'),
               this.preload('configmap'),
               this.preload('namespacedSecret'),

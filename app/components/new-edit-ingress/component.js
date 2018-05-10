@@ -17,7 +17,11 @@ export default Component.extend(NewOrEdit, {
   namespacedCertificates: null,
   certificates: null,
 
+
   isGKE: alias('scope.currentCluster.isGKE'),
+
+  showHeader: true,
+  showBtnSave: true,
 
   primaryResource: alias('ingress'),
 

@@ -1,0 +1,21 @@
+<div class="pt-10"></div>
+{{#if selecting}}
+  <div class="inline-form">
+    <label class="acc-label">
+      {{uc-first selectorType}}
+    </label>
+    <div>
+      {{#if (eq selectorType 'workload')}}
+        {{schema/input-workload selectedNamespace=ingress.namespace selected=path.serviceId readOnly=false}}
+      {{/if}}
+      {{#if (eq selectorType 'ingress')}}
+        {{schema/input-ingresses selectedNamespace=ingress.namespace selected=path.serviceId readOnly=false}}
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="pt-10"></div>
+  <div class="text-right"><a role="button" {{action "setState" "selecting" false}}>Copy{{!-- {{t 'copyFromLabel'}} --}}</a></div>
+{{else}}
+  <div class="text-right"><a role="button" {{action "setState" "selecting" true}}>Copy From Existing {{uc-first selectorType}}{{!-- {{t 'copyFromLabelConformation'}} --}}</a></div>
+{{/if}}

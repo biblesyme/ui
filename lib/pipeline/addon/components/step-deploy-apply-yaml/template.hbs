@@ -1,0 +1,38 @@
+<div class="pt-20"></div>
+<div class="inline-form">
+  <label>Source of Yaml</label>
+  <div class="pt-10"></div>
+  <label class="mr-30">{{radio-button selection=selectedModel.sourceType value="sc" disabled=(if (eq modalOpts.type 'review') true false)}}
+      {{t 'newPipelineStep.stepType.build.readSourceCode'}}
+  </label>
+  <label class="mr-30">{{radio-button selection=selectedModel.sourceType value="file" disabled=(if (eq modalOpts.type 'review') true false)}}
+      {{t 'newPipelineStep.stepType.build.readFile'}}
+  </label>
+</div>
+
+{{#if (eq selectedModel.sourceType 'file')}}
+  <div class="pt-20"></div>
+  {{#if (eq modalOpts.type 'review')}}
+   {{!--  {{pipeline/pipeline-codemirror
+      value=selectedModel.dockerFileContent
+      valueUpdated=(action (mut selectedModel.dockerFileContent))
+      options=(hash autofocus=true theme="monokai" lineNumbers=true mode="dockerfile" addon="hint/anyword-hint.js" readOnly=(if (eq modalOpts.type 'review') true false))
+    }} --}}
+  {{else}}
+    {{input-yaml
+      title="kubernetes.yaml"
+      canChangeName=false
+      showDownload=false
+      mode="dockerfile"
+      value=selectedModel.dockerFileContent
+      placeholder="newStack.dockerCompose.placeholder"
+    }}
+  {{/if}}
+{{else}}
+  <div class="pt-20"></div>
+  <div class="inline-form">
+    <label>Yaml Path{{field-required}}</label>
+    <div class="pt-10"></div>
+    {{input class="form-control" value=selectedModel.dockerFilePath placeholder="Dockerfile Path" disabled=(if (eq modalOpts.type 'review') true false)}}
+  </div>
+{{/if}}
